@@ -1,0 +1,365 @@
+{"admin":{"id":15,"firstName":"Test","lastName":"SuperAdmin","email":"admin.test@ondemand.local","groupId":1},"roles":[1],"permissions":["*"],"accessTokenExpiresIn":900}
+--- reads: each app sees its own root row and only its own ---
+GET /genie-service-content/genie/list                      200  OK
+GET /genie-service-content/runner/list                     200  OK
+genie list holds exactly row 280                           YES  OK
+runner list holds exactly row 287                          YES  OK
+genie list says it is Delivery Genie                       YES  OK
+runner list says it is Delivery Runner                     YES  OK
+the runner row is the Runner category                      YES  OK
+the runner row is named "Delivery Runner"                  YES  OK
+no genie id appears on the runner path                     YES  OK
+no runner id appears on the genie path                     YES  OK
+--- reads: the runner row detail, in the shapes the editor renders ---
+GET /genie-service-content/runner/287                      200  OK
+26 shipped languages, every name filled                    YES  OK
+every language holds the same stored text                  YES  OK
+four artwork slots, in the legacy order                    YES  OK
+the icon column carries a stored file name                 YES  OK
+the runner row holds no promotional image                  YES  OK
+both JSON copy columns are offered                         YES  OK
+neither column is unparsed                                 YES  OK
+the promote title is 26 keys, all blank                    YES  OK
+the home copy carries titles but no sub-titles             YES  OK
+the blob editor still offers both bases                    YES  OK
+the OTP switch reads unset, as stored                      YES  OK
+settings carry the four columns with their DDL choices     YES  OK
+orders are the runner row own: 6 / 61                      YES  OK
+nothing else is promoted today                             YES  OK
+--- reads: the genie row still reads as before (sibling regression) ---
+GET /genie-service-content/genie/280                       200  OK
+genie 280 is Delivery Genie and keeps its own orders       YES  OK
+genie 280 home copy does carry sub-titles                  YES  OK
+--- reads: scope is a wall, not a filter ---
+GET /runner/280 (a row of the other app 404)               404  OK
+GET /genie/287 (a row of the other app 404)                404  OK
+  the runner 404 names Delivery Runner                     {"error":{"code":"NOT_FOUND","message":"No Delivery Runner service content row #280."}}  OK
+  the genie 404 names Delivery Genie                       {"error":{"code":"NOT_FOUND","message":"No Delivery Genie service content row #287."}}  OK
+GET /runner/999999 (no such row 404)                       404  OK
+GET /runner/0 (not a row id 400)                           400  OK
+GET /runner/abc (bad id 400)                               400  OK
+GET /runner/list-x (id route 400)                          400  OK
+GET /medical/list (no such app 400)                        400  OK
+GET /GENIE/list (segment is case-exact 400)                400  OK
+--- reads: artwork bytes, both from the read-only legacy tree ---
+GET /runner/287/image/icon                                 200  OK
+GET /runner/287/image/services-icon                        200  OK
+GET /genie/280/image/icon (sibling still serves)           200  OK
+GET /runner/287/image/promote (column empty 404)           404  OK
+GET /runner/287/image/full-logo (column empty 404)         404  OK
+  an empty slot says so, not "file missing"                {"error":{"code":"NOT_FOUND","message":"No promotional banner image on file"}}  OK
+GET /runner/287/image/nosuchslot (400)                     400  OK
+the runner icon is served as an image                      image/png  OK
+--- reads: auth ---
+GET /runner/list (anonymous)                               401  OK
+GET /runner/list without X-Requested-With                  401  OK
+PUT /runner/287 (anonymous)                                401  OK
+--- reads: the three runner keys are grantable under sub-group 144 ---
+GET /permissions/tree                                      200  OK
+sub-group 144 carries exactly view / update / update-status YES  OK
+they belong to display group 34, Delivery Runner           YES  OK
+sub-group 144 is the first of group 34 (legacy order)      YES  OK
+the genie keys stay on 141, the runner keys on 144         YES  OK
+--- runner list shape (what the panel renders) ---
+{
+    "items": [
+        {
+            "id": 287,
+            "app": "runner",
+            "label": "Delivery Runner",
+            "catType": "Runner",
+            "status": "Active",
+            "displayName": "Delivery Runner",
+            "namesFilled": 26,
+            "languagesTotal": 26,
+            "displayOrder": 6,
+            "displayOrderHomepage": 61,
+            "promoteBanner": "No",
+            "icon": "ic_car_EN_1671787541.png"
+        }
+    ],
+    "total": 1
+}
+--- runner row shape (names, copy, artwork, settings) ---
+{
+  "id": 287,
+  "app": "runner",
+  "label": "Delivery Runner",
+  "catType": "Runner",
+  "status": "Active",
+  "displayName": "Delivery Runner",
+  "namesFilled": 26,
+  "languagesTotal": 26,
+  "displayOrder": 6,
+  "displayOrderHomepage": 61,
+  "promoteBanner": "No",
+  "icon": "ic_car_EN_1671787541.png",
+  "names": {
+    "EN": "Delivery Runner",
+    "PTBR": "Delivery Runner",
+    "ZHCN": "Delivery Runner",
+    "CS": "Delivery Runner",
+    "FR": "Delivery Runner",
+    "HI": "Delivery Runner",
+    "PL": "Delivery Runner",
+    "RU": "Delivery Runner",
+    "SK": "Delivery Runner",
+    "SL": "Delivery Runner",
+    "UK": "Delivery Runner",
+    "KO": "Delivery Runner",
+    "JA": "Delivery Runner",
+    "RO": "Delivery Runner",
+    "SW": "Delivery Runner",
+    "HU": "Delivery Runner",
+    "BG": "Delivery Runner",
+    "EL": "Delivery Runner",
+    "NL": "Delivery Runner",
+    "AR": "Delivery Runner",
+    "IT": "Delivery Runner",
+    "SV": "Delivery Runner",
+    "ES": "Delivery Runner",
+    "LV": "Delivery Runner",
+    "DE": "Delivery Runner",
+    "ID": "Delivery Runner"
+  },
+  "languages": [
+    {
+      "code": "EN",
+      "label": "English",
+      "isDefault": true
+    },
+    {
+      "code": "PTBR",
+      "label": "Portuguese (Brazil)",
+      "isDefault": false
+    },
+    {
+      "code": "ZHCN",
+      "label": "Chinese (Simplified)",
+      "isDefault": false
+    },
+    {
+      "code": "CS",
+      "label": "Czech",
+      "isDefault": false
+    },
+    {
+      "code": "FR",
+      "label": "French",
+      "isDefault": false
+    },
+    {
+      "code": "HI",
+      "label": "Hindi",
+      "isDefault": false
+    },
+    {
+      "code": "PL",
+      "label": "Polish",
+      "isDefault": false
+    },
+    {
+      "code": "RU",
+      "label": "Russian",
+      "isDefault": false
+    },
+    {
+      "code": "SK",
+      "label": "Slovak",
+      "isDefault": false
+    },
+    {
+      "code": "SL",
+      "label": "Slovenian",
+      "isDefault": false
+    },
+    {
+      "code": "UK",
+      "label": "Ukrainian",
+      "isDefault": false
+    },
+    {
+      "code": "KO",
+      "label": "Korean",
+      "isDefault": false
+    },
+    {
+      "code": "JA",
+      "label": "Japanese",
+      "isDefault": false
+    },
+    {
+      "code": "RO",
+      "label": "Romanian",
+      "isDefault": false
+    },
+    {
+      "code": "SW",
+      "label": "Swahili",
+      "isDefault": false
+    },
+    {
+      "code": "HU",
+      "label": "Hungarian",
+      "isDefault": false
+    },
+    {
+      "code": "BG",
+      "label": "Bulgarian",
+      "isDefault": false
+    },
+    {
+      "code": "EL",
+      "label": "Greek",
+      "isDefault": false
+    },
+    {
+      "code": "NL",
+      "label": "Dutch",
+      "isDefault": false
+    },
+    {
+      "code": "AR",
+      "label": "Arabic",
+      "isDefault": false
+    },
+    {
+      "code": "IT",
+      "label": "Italian",
+      "isDefault": false
+    },
+    {
+      "code": "SV",
+      "label": "Swedish",
+      "isDefault": false
+    },
+    {
+      "code": "ES",
+      "label": "Spanish",
+      "isDefault": false
+    },
+    {
+      "code": "LV",
+      "label": "Latvian",
+      "isDefault": false
+    },
+    {
+      "code": "DE",
+      "label": "German",
+      "isDefault": false
+    },
+    {
+      "code": "ID",
+      "label": "Indonesian",
+      "isDefault": false
+    }
+  ],
+  "images": [
+    {
+      "slot": "icon",
+      "column": "vListLogo3",
+      "label": "Icon",
+      "value": "ic_car_EN_1671787541.png"
+    },
+    {
+      "slot": "promote",
+      "column": "vPromoteBannerImage",
+      "label": "Promotional banner image",
+      "value": ""
+    },
+    {
+      "slot": "full-logo",
+      "column": "vHomepageFullLogo",
+      "label": "Home page Our Services image",
+      "value": ""
+    },
+    {
+      "slot": "services-icon",
+      "column": "vHomepageLogoOurServices",
+      "label": "Home page Our Services icon",
+      "value": "motorbike--1-_20211206124411.png"
+    }
+  ],
+  "blobs": [
+    {
+      "key": "tPromoteBannerTitle",
+      "label": "Promotional banner title",
+      "fields": [
+        {
+          "base": "tPromoteBannerTitle",
+          "label": "Promote Banner Title",
+          "max": 255
+        }
+      ],
+      "values": {
+        "tPromoteBannerTitle_AR": "",
+        "tPromoteBannerTitle_BG": "",
+        "tPromoteBannerTitle_CS": ""
+      },
+      "unparsed": false
+    },
+    {
+      "key": "vServiceCatTitleHomepage",
+      "label": "Home page service copy",
+      "fields": [
+        {
+          "base": "vServiceCatTitleHomepage",
+          "label": "Service Cat Title Homepage",
+          "max": 255
+        },
+        {
+          "base": "vServiceCatSubTitleHomepage",
+          "label": "Service Cat Sub Title Homepage",
+          "max": 1000
+        }
+      ],
+      "values": {
+        "vServiceCatTitleHomepage_EN": "Delivery Runner",
+        "vServiceCatTitleHomepage_ID": "Pengiriman Runner",
+        "vServiceCatTitleHomepage_DE": "Delivery Runner"
+      },
+      "unparsed": false
+    }
+  ],
+  "settingSpecs": [
+    {
+      "column": "eOTPCodeEnable",
+      "label": "OTP / confirmation code",
+      "kind": "enum",
+      "options": [
+        "No",
+        "Yes"
+      ]
+    },
+    {
+      "column": "ePromoteBanner",
+      "label": "Promote as banner",
+      "kind": "enum",
+      "options": [
+        "No",
+        "Yes"
+      ]
+    },
+    {
+      "column": "iDisplayOrder",
+      "label": "Display order",
+      "kind": "int",
+      "min": 0,
+      "max": 9999
+    },
+    {
+      "column": "iDisplayOrderHomepage",
+      "label": "Home page display order",
+      "kind": "int",
+      "min": 0,
+      "max": 9999
+    }
+  ],
+  "settings": {
+    "eOTPCodeEnable": "",
+    "ePromoteBanner": "No",
+    "iDisplayOrder": "6",
+    "iDisplayOrderHomepage": "61"
+  },
+  "promotedElsewhere": []
+}

@@ -1,0 +1,49 @@
+  ok   login as the test super admin
+
+the shared table before the smoke: 1 live scheme(s) — #1 All locations 0–200
+
+--- Delivery Runner's own menu renders the Delivery Charges panel ---
+  ok   the panel titles itself the distance-wise way
+  ok     because the legacy switch is on for both menus
+  ok     and names the runner key family the guards ask for
+  ok   the shared-rows warning is on the panel
+  ok     and says the same rows price all three
+  ok   the shipped scheme is listed here
+  ok     with its stored band
+  ok     and its legacy amounts
+  ok     listed as the only delivery charge there
+  ok   the runner menu offers its own create button
+
+--- its create route is the runner app's own form, over the same table ---
+  ok   the button routes to /delivery-charge/runner/new
+  ok   the runner form titles itself the distance-wise way
+  ok     and carries the same shared-rows warning
+  ok     with no zone to pick but the one the legacy row uses
+
+--- back to the runner list, which still holds the one shared scheme ---
+  ok   the panel came back with its own row
+  screenshot -> /home/ataa/mohamed/multiservice/.lh/b157-delivery-charges.png
+
+--- the same rows under the Genie menu, with genie's keys ---
+  ok   genie's panel lists the same All-locations scheme
+  ok     the same band
+  ok     and the same amounts
+  ok   but it guards itself with the genie suffix
+  ok     and its own note says so
+
+--- the delete dialog says what a runner delete really hides ---
+  ok   the dialog opens from the row
+  ok     it warns that runner is not the only menu reading the table
+  ok     and names the row's own location as the thing to type
+  ok     and it stays disabled while the words are wrong
+  ok     enabled once the label is typed back exactly
+  ok   the dialog was dismissed without deleting
+  ok   the runner list still holds what it held
+  ok     the shipped scheme is still Active
+  ok     with its band untouched
+  ok     and genie reads the same row
+
+console errors/warnings: <none>
+  ok   the page threw no uncaught exception
+
+b157-ui: 32 ok, 0 failed

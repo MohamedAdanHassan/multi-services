@@ -1,0 +1,69 @@
+{"admin":{"id":15,"firstName":"Test","lastName":"SuperAdmin","email":"admin.test@ondemand.local","groupId":1},"roles":[1],"permissions":["*"],"accessTokenExpiresIn":900}
+--- reads: every app gets its own slice ---
+GET /vehicle-type/ride/list (taxi #sub-15)           200  OK
+GET /vehicle-type/delivery/list (parcel #sub-138)    200  OK
+GET /vehicle-type/genie/list (genie #sub-153)        200  OK
+GET /vehicle-type/genie/list?limit=50 (paged)        200  OK
+GET /vehicle-type/genie/list?status=Active           200  OK
+GET /vehicle-type/genie/list?search=Car              200  OK
+GET /vehicle-type/genie/406 (own row)                200  OK
+GET /vehicle-type/genie/407 (own row)                200  OK
+GET /vehicle-type/genie/defaults (eType DeliverAll)  200  OK
+--- reads: a slice never reaches another ---
+GET /vehicle-type/delivery/406 (cross-slice 404)     404  OK
+GET /vehicle-type/ride/406 (cross-slice 404)         404  OK
+GET /vehicle-type/genie/397 (parcel row 404)         404  OK
+GET /vehicle-type/genie/1 (ride row 404)             404  OK
+GET /vehicle-type/ride/406 (genie row 404)           404  OK
+--- reads: unknown app and bad input ---
+GET /vehicle-type/medical/list (unknown app 400)     400  OK
+GET /vehicle-type/deliverall/list (not an app 400)   400  OK
+GET /vehicle-type/genie/999999 (missing 404)         404  OK
+GET /vehicle-type/genie/abc (bad id 400)             400  OK
+GET /vehicle-type/list (old flat path gone)          404  OK
+--- genie list shape ---
+{
+    "items": [
+        {
+            "id": 406,
+            "name": "2 Wheeler / Motorbike",
+            "status": "Active",
+            "iconType": "Bike",
+            "fareType": "Fixed",
+            "logo": "",
+            "persons": 4,
+            "displayOrder": 3,
+            "pool": "No",
+            "otp": "No",
+            "commission": 12,
+            "baseFare": 0,
+            "perKm": 0,
+            "deliveryCharge": 0,
+            "cancelCharge": 0,
+            "radius": 100,
+            "namesFilled": 26,
+            "languagesTotal": 26
+        },
+        {
+            "id": 407,
+            "name": "Car",
+            "status": "Active",
+            "iconType": "Car",
+            "fareType": "Fixed",
+            "logo": "",
+            "persons": 4,
+            "displayOrder": 3,
+            "pool": "No",
+            "otp": "No",
+            "commission": 12,
+            "baseFare": 0,
+            "perKm": 0,
+            "deliveryCharge": 0,
+            "cancelCharge": 0,
+            "radius": 50,
+            "namesFilled": 26,
+            "languagesTotal": 26
+        }
+    ],
+    "total": 2
+}

@@ -1,0 +1,130 @@
+nohup: ignoring input
+
+> backend@0.1.0 dev
+> tsx watch src/index.ts < /dev/null
+
+ok: created admin_login_state
+ok: created admin_refresh_tokens
+ok: created admin_admin_group
+ok: created admin_group_meta
+ok: created provider_service
+skip: index already present on admin_pro_group_permission
+skip: index already present on admin_locations
+Migration complete.
+Backend listening on http://localhost:4000
+Connected to MySQL database "ondemand" (development)
+slow response: POST /api/auth/login -> 200 in 4974ms
+slow response: GET /api/delivery-charge/runner/list -> 200 in 1798ms
+slow response: GET /api/delivery-charge/runner/1 -> 200 in 529ms
+slow response: POST /api/auth/login -> 200 in 1916ms
+slow response: GET /api/permissions/tree -> 200 in 472ms
+slow response: GET /api/permissions/tree -> 200 in 592ms
+slow response: POST /api/auth/login -> 200 in 1218ms
+slow response: GET /api/permissions/tree -> 200 in 442ms
+slow response: POST /api/auth/login -> 200 in 1200ms
+slow response: POST /api/auth/login -> 200 in 1700ms
+slow response: POST /api/delivery-charge/runner -> 201 in 224ms
+slow response: GET /api/delivery-charge/genie/list -> 200 in 213ms
+slow response: POST /api/delivery-charge/runner -> 201 in 494ms
+slow response: PUT /api/delivery-charge/runner/1 -> 200 in 456ms
+slow response: PUT /api/delivery-charge/genie/1 -> 200 in 482ms
+slow response: DELETE /api/delivery-charge/genie/2 -> 200 in 272ms
+slow response: POST /api/delivery-charge/genie -> 201 in 412ms
+slow response: DELETE /api/delivery-charge/runner/4 -> 200 in 332ms
+slow response: DELETE /api/delivery-charge/runner/3 -> 200 in 402ms
+slow response: POST /api/delivery-charge/runner -> 201 in 300ms
+slow response: DELETE /api/delivery-charge/genie/5 -> 200 in 222ms
+slow response: POST /api/auth/login -> 200 in 998ms
+slow response: POST /api/delivery-charge/runner -> 201 in 383ms
+slow response: POST /api/delivery-charge/runner -> 201 in 510ms
+slow response: PUT /api/delivery-charge/runner/1 -> 200 in 352ms
+slow response: PUT /api/delivery-charge/genie/1 -> 200 in 292ms
+slow response: PATCH /api/delivery-charge/runner/2/status -> 200 in 261ms
+slow response: PATCH /api/delivery-charge/genie/2/status -> 200 in 299ms
+slow response: PATCH /api/delivery-charge/runner/1/status -> 200 in 315ms
+slow response: PATCH /api/delivery-charge/genie/1/status -> 200 in 217ms
+slow response: DELETE /api/delivery-charge/genie/2 -> 200 in 498ms
+slow response: POST /api/delivery-charge/genie -> 201 in 461ms
+slow response: DELETE /api/delivery-charge/runner/4 -> 200 in 392ms
+slow response: DELETE /api/delivery-charge/runner/3 -> 200 in 362ms
+slow response: POST /api/delivery-charge/runner -> 201 in 241ms
+slow response: DELETE /api/delivery-charge/genie/5 -> 200 in 461ms
+slow response: POST /api/auth/login -> 200 in 1083ms
+slow response: POST /api/delivery-charge/runner -> 201 in 339ms
+slow response: PUT /api/delivery-charge/runner/1 -> 200 in 319ms
+slow response: PUT /api/delivery-charge/genie/1 -> 200 in 267ms
+slow response: PATCH /api/delivery-charge/runner/2/status -> 200 in 422ms
+slow response: PATCH /api/delivery-charge/genie/2/status -> 200 in 258ms
+slow response: GET /api/delivery-charge/genie/list -> 200 in 366ms
+slow response: POST /api/delivery-charge/genie -> 201 in 214ms
+slow response: DELETE /api/delivery-charge/runner/4 -> 200 in 239ms
+slow response: DELETE /api/delivery-charge/genie/5 -> 200 in 265ms
+slow response: POST /api/auth/login -> 200 in 998ms
+slow response: POST /api/auth/login -> 200 in 1210ms
+slow response: POST /api/delivery-charge/genie -> 201 in 244ms
+slow response: POST /api/delivery-charge/genie -> 201 in 345ms
+slow response: POST /api/delivery-charge/genie -> 201 in 202ms
+slow response: PUT /api/delivery-charge/genie/2 -> 200 in 984ms
+slow response: PATCH /api/delivery-charge/genie/4/status -> 200 in 300ms
+slow response: PATCH /api/delivery-charge/genie/4/status -> 200 in 215ms
+slow response: PUT /api/delivery-charge/genie/6 -> 200 in 274ms
+slow response: DELETE /api/delivery-charge/genie/3 -> 200 in 373ms
+slow response: POST /api/delivery-charge/genie -> 201 in 477ms
+slow response: POST /api/auth/login -> 200 in 1302ms
+slow response: POST /api/auth/login -> 200 in 1517ms
+slow response: POST /api/auth/login -> 200 in 1567ms
+slow response: POST /api/auth/login -> 200 in 1709ms
+slow response: POST /api/auth/login -> 200 in 1845ms
+slow response: GET /api/permissions/tree -> 200 in 315ms
+slow response: GET /api/permissions/tree -> 304 in 260ms
+slow response: GET /api/dashboard/overview -> 200 in 789ms
+slow response: GET /api/dashboard/overview -> 304 in 496ms
+slow response: GET /api/permissions/tree -> 304 in 228ms
+slow response: GET /api/permissions/tree -> 304 in 363ms
+slow response: GET /api/delivery-charge/runner/list?sort=id&order=desc&page=1&limit=50 -> 304 in 626ms
+slow response: GET /api/delivery-charge/genie/list?sort=id&order=desc&page=1&limit=50 -> 200 in 241ms
+slow response: GET /api/permissions/tree -> 304 in 564ms
+slow response: GET /api/dashboard/overview -> 200 in 822ms
+slow response: GET /api/permissions/tree -> 304 in 428ms
+slow response: GET /api/delivery-charge/runner/list -> 200 in 1028ms
+slow response: POST /api/auth/login -> 200 in 1180ms
+slow response: POST /api/delivery-charge/runner -> 201 in 243ms
+slow response: POST /api/delivery-charge/runner -> 201 in 260ms
+slow response: POST /api/delivery-charge/genie -> 201 in 203ms
+slow response: POST /api/delivery-charge/runner -> 201 in 372ms
+slow response: PUT /api/delivery-charge/runner/6 -> 200 in 359ms
+slow response: PUT /api/delivery-charge/genie/6 -> 200 in 271ms
+slow response: PUT /api/delivery-charge/genie/6 -> 200 in 302ms
+slow response: PUT /api/delivery-charge/runner/1 -> 200 in 248ms
+slow response: PATCH /api/delivery-charge/runner/6/status -> 200 in 222ms
+slow response: POST /api/delivery-charge/runner -> 201 in 229ms
+slow response: DELETE /api/delivery-charge/runner/5 -> 200 in 228ms
+slow response: GET /api/delivery-charge/runner/list -> 200 in 288ms
+slow response: POST /api/auth/login -> 200 in 1718ms
+slow response: POST /api/delivery-charge/runner -> 201 in 288ms
+slow response: POST /api/delivery-charge/runner -> 201 in 335ms
+slow response: POST /api/delivery-charge/runner -> 201 in 278ms
+slow response: POST /api/delivery-charge/runner -> 201 in 302ms
+slow response: POST /api/delivery-charge/genie -> 201 in 389ms
+slow response: PUT /api/delivery-charge/runner/6 -> 200 in 426ms
+slow response: PUT /api/delivery-charge/genie/6 -> 200 in 491ms
+slow response: PUT /api/delivery-charge/genie/6 -> 200 in 383ms
+slow response: PUT /api/delivery-charge/runner/1 -> 200 in 333ms
+slow response: PUT /api/delivery-charge/genie/1 -> 200 in 365ms
+slow response: PATCH /api/delivery-charge/runner/6/status -> 200 in 234ms
+slow response: PATCH /api/delivery-charge/genie/6/status -> 200 in 261ms
+slow response: DELETE /api/delivery-charge/genie/8 -> 200 in 233ms
+slow response: POST /api/delivery-charge/runner -> 201 in 203ms
+slow response: DELETE /api/delivery-charge/runner/5 -> 200 in 280ms
+slow response: POST /api/delivery-charge/runner -> 201 in 321ms
+slow response: POST /api/auth/login -> 200 in 1097ms
+slow response: POST /api/delivery-charge/runner -> 201 in 213ms
+slow response: PUT /api/delivery-charge/runner/6 -> 200 in 267ms
+slow response: PUT /api/delivery-charge/genie/6 -> 200 in 237ms
+slow response: PUT /api/delivery-charge/genie/6 -> 200 in 396ms
+slow response: PUT /api/delivery-charge/runner/1 -> 200 in 261ms
+slow response: PUT /api/delivery-charge/genie/1 -> 200 in 209ms
+slow response: PATCH /api/delivery-charge/runner/6/status -> 200 in 336ms
+slow response: PATCH /api/delivery-charge/genie/6/status -> 200 in 232ms
+slow response: DELETE /api/delivery-charge/runner/5 -> 200 in 258ms
+slow response: GET /api/delivery-charge/runner/list -> 200 in 537ms

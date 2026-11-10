@@ -1,0 +1,24 @@
+
+===== list sorted by vehicle type =====
+{"id":1,"vehicle_type_id":406,"vehicle_type_name":"2 Wheeler / Motorbike","vehicle_type_status":"Active","location_id":-1,"location_name":"","distance_from":0,"distance_to":200,"driver_completed":"10.00","driver_cancelled":"5.00","user_charge":"0.00"}
+{"id":2,"vehicle_type_id":407,"vehicle_type_name":"Car","vehicle_type_status":"Active","location_id":-1,"location_name":"","distance_from":0,"distance_to":100,"driver_completed":"15.00","driver_cancelled":"7.00","user_charge":"0.00"}
+
+===== count with a search term =====
+{"n":1}
+
+===== one row =====
+{"iDeliveyChargeId":1,"iVehicleTypeId":406,"vehicle_type_name":"2 Wheeler / Motorbike","location_id":-1,"location_name":"","iDistanceRangeFrom":0,"iDistanceRangeTo":200,"fDeliveryCharge":"10.00","fDeliveryChargeCancelled":"5.00","fDeliveryChargeUser":"0.00"}
+
+===== bands of one vehicle type =====
+{"iDeliveyChargeId":1,"f":0,"t":200}
+
+===== next id =====
+{"nid":3}
+
+===== vehicle type options =====
+{"iVehicleTypeId":406,"name":"2 Wheeler / Motorbike","iLocationId":-1,"location_name":""}
+{"iVehicleTypeId":407,"name":"Car","iLocationId":-1,"location_name":""}
+
+===== features + unit =====
+{"vName":"DEFAULT_DISTANCE_UNIT","vValue":"KMs"}
+{"vName":"ENABLE_CUSTOM_DELIVERY_CHARGE_ORDER","vValue":"Yes"}

@@ -1,0 +1,183 @@
+  ok   login as the test super admin
+  ok   the shipped runner group is the two rows the copy says
+  ok   the Latvian row holds its stored text
+  ok   the Slovenian row holds its stored text
+  ok   neither row is English
+  ·  baseline: 993 rows, max iFaqcategoryId 1943, max iUniqueId 991, uploads []
+
+--- create refuses a payload the legacy form would have rejected ---
+  ok   POST without an English title -> 400
+  ok   and says so in words
+  ok   POST with an unknown language code -> 400
+  ok   POST with a 101-character title -> 400
+  ok   POST with a non-hex status-bar colour -> 400
+  ok   nothing was inserted by the rejected creates
+  ok   and the table still holds its shipped 993 rows
+
+--- create writes one row per language inside the runner slice ---
+  ok   POST /banner/runner -> 201
+  ok   the new banner has a group id
+  ok   the add form pre-filled slot 3 (runner max + 1)
+  ok   26 language rows answered
+  ok   the table holds 26 rows for the group
+  ok   every row is eType='Runner'
+  ok   the English title landed
+  ok   untouched languages are stored blank
+  ok   one shared status
+  ok   one shared slot
+  ok   shown everywhere
+  ok   the picture starts empty
+  ok   eFor matches the shipped rows
+  ok   the group id is the table-wide max + 1
+  ok   the runner list now shows 2 groups
+  ok   the shipped group still leads it (slot 2 before 3)
+  ok   the genie slice is untouched
+  ok   the parcel slice is untouched
+  ok   and its own max slot is still 3, not the runner's
+
+--- the other slices cannot read or rewrite this group, nor it them ---
+  ok   GET /banner/genie/<uid> -> 404
+  ok   PUT /banner/genie/<uid> -> 404
+  ok   PATCH /banner/delivery/<uid>/status -> 404
+  ok   DELETE /banner/delivery/<uid> -> 404
+  ok   GET /banner/runner/68 (genie's group) -> 404
+  ok   PUT /banner/runner/68 -> 404
+  ok   PATCH /banner/runner/50/status -> 404
+  ok   DELETE /banner/runner/70 -> 404
+  ok   the new group survived the cross-slice attempts
+  ok   and stayed Active
+  ok   genie 68 kept all 26 titles
+  ok   parcel 50 kept its colour
+  ok   unknown app on a write path -> 400
+
+--- edit fans out per language, slot and colour ---
+  ok   PUT one language -> 200
+  ok   the French row changed
+  ok   the English row did not
+  ok   still 26 rows
+  ok   PUT slot + colour -> 200
+  ok   the slot is shared by the group
+  ok   the colour is shared by the group
+  ok   PUT with nothing to change -> 400
+  ok   PUT a slot above 9999 -> 400
+  ok   the refused saves changed no row
+
+--- status is atomic over the group and idempotent ---
+  ok   PATCH Inactive -> 200
+  ok   every row is Inactive
+  ok   PATCH the same status again -> 200
+  ok   and the group is still Inactive
+  ok   PATCH a status the enum has not -> 400
+  ok   PATCH back to Active -> 200
+  ok   every row is Active again
+  ok   the Inactive filter now finds nothing
+  ok   the search filter finds this banner
+  ok   the genie slice still lists its own group
+
+--- the picture: attach, replace, refuse, and the wrong slice ---
+  ok   POST image -> 200
+  ok   the group got a file name
+  ok   every row of the group names it
+  ok   the file is on disk
+  ok   GET image returns the bytes
+  ok   replace the picture -> 200
+  ok   a second file name was written
+  ok   the orphaned first file was removed
+  ok   uploading into genie's group through the runner slice -> 404
+  ok   and it left no orphan behind
+  ok   genie 68 still names its shipped artwork
+  ok   a non-image upload -> 400
+  ok   the rejected upload wrote no file
+  ok   the created group's picture is cleared for the delete case
+
+--- delete is name-confirmed and wipes the group ---
+  ok   the group is titled by its English row
+  ok   DELETE with a blank confirm -> 400
+  ok   DELETE with another language's title -> 400
+  ok   and it asks for the exact title
+  ok   DELETE an unknown id -> 404
+  ok   DELETE with the right name -> 200
+  ok   it removed all 26 rows
+  ok   the group is gone from the table
+  ok   the picture nothing points at was deleted
+  ok   the runner list is back to 1 group
+  ok   GET the deleted banner -> 404
+  ok   the table is back to its shipped row count
+
+--- the shipped group: a save ADDS the languages it never had ---
+  ok   PUT a language the group has no row for -> 200
+  ok   the group now holds 3 rows
+  ok   the English row was inserted with the group's text
+  ok   the new row copied the shipped picture
+  ok   and the shipped slot
+  ok   the Latvian row is untouched
+  ok   the Slovenian row is untouched
+  ok   the detail view counts 3 languages
+  ok   and 3 of 26 languages titled
+  ok   the list now says 3 languages
+  ok   and still labels the group by its English row
+  ok   the harness removed the row it added
+  ok   the group is back to its shipped 2 rows
+  ok   and the ids it holds are the shipped ones
+
+--- the shipped group: label fallback, fan-out, status, picture ---
+  ok   with no English row the title is the Latvian one
+  ok   PUT the Latvian title -> 200
+  ok   the row holds it
+  ok   the Slovenian row is not rewritten
+  ok   PUT the original title back -> 200
+  ok   the row holds it again
+  ok   PUT slot + colour -> 200
+  ok   both rows share the slot
+  ok   both rows share the colour
+  ok   the genie group kept its own slot
+  ok   PUT the shipped slot and blank colour back -> 200
+  ok   the slot is 2 again
+  ok   the colour is blank again
+  ok   PATCH the shipped group Inactive -> 200
+  ok   both rows went Inactive
+  ok   the list labels it Inactive
+  ok   the Inactive filter finds it
+  ok   PATCH it back -> 200
+  ok   both rows are Active again
+  ok   the shipped artwork is served
+  ok   and it is a real image
+  ok   replace the shipped picture -> 200
+  ok   both rows name the new file
+  ok   no row anywhere still names the shipped file
+  ok   the read-only legacy artwork file survived the replace
+  ok   the upload folder holds nothing but the new file
+  ok   the harness put the shipped file name back
+  ok   and removed its own upload
+
+--- the shipped group really deletes, and really comes back ---
+  ok   DELETE with the Slovenian title -> 400
+  ok   and it asks for the fallback title it is labelled by
+  ok   DELETE with “Piegādes skrējējs” -> 200
+  ok   it removed both language rows
+  ok   the runner slice is empty now
+  ok   and the group is gone from the table
+  ok   the group is back with its 2 rows
+  ok   under the same row ids
+  ok   with the same titles
+  ok   with the same picture
+  ok   the runner list shows it again
+
+--- every runner mutation left an audit trail ---
+  ok   audit event banner_created
+  ok   audit event banner_updated
+  ok   audit event banner_status_changed
+  ok   audit event banner_image_uploaded
+  ok   audit event banner_deleted
+
+--- the table is where it started ---
+  ok   the row count is back to the shipped total
+  ok   the highest iFaqcategoryId is unchanged
+  ok   the highest iUniqueId is unchanged
+  ok   no other slice caught a test title
+  ok   the runner slice lists one group again
+  ok   the genie slice lists one group
+  ok   the parcel slice lists two
+upload leftovers in /home/ataa/mohamed/multiservice/backend/uploads/Banners: []
+
+b143-write: 155 ok, 0 failed

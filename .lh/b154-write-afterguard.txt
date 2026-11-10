@@ -1,0 +1,148 @@
+  ok   login as the test super admin
+
+baseline: 1 live row(s); #1 = location 0, band 0→200
+the legacy row #1 covers All locations; the distance-wise table is a separate screen
+
+seeded zones 8 9 10 11 as eFor='UserDeliveryCharge' (dropped at the end)
+
+--- distance-wise ON: the bands decide what a location holds ---
+  ok   create a band inside the stored 0→200 -> 400
+  ok     and the message shows the band, not an id
+  ok   create the next band of All locations -> 201
+  ok     the keyless table hands out MAX+1
+  ok     order total written
+  ok     charge above written
+  ok     charge below written
+  ok     free subtotal written
+  ok     free radius written
+  ok     Buy Any Service charge written
+  ok     Buy Any Service cancellation charge written
+  ok     band from
+  ok     band to
+  ok     a new scheme starts Active
+  ok     the location is the All-locations sentinel
+  ok     the DTO calls it All locations
+  ok     and the band is not open-ended
+  ok   create a band overlapping the one just written -> 400
+  ok   create a zone's first band above 0 -> 400
+  ok   create an open-ended band from the ∞ the list shows -> 201
+  ok     next id again
+  ok     the sentinel is stored, not a bigger number
+  ok     the DTO says the band is open
+  ok     and labels it with ∞
+  ok   create with the two optional amounts left blank -> 201
+  ok     free subtotal stored as 0, which is what the apps read as 'no threshold'
+  ok     free radius stored as 0
+  ok     the required amounts still went in
+  ok   live rows after the creates
+
+--- the payload is bounded by the columns and by the specs ---
+  ok   an unknown settings key -> 400
+  ok   a missing required amount -> 400
+  ok   a missing band while distance-wise is on -> 400
+  ok   a negative charge -> 400
+  ok   an amount past the column ceiling -> 400
+  ok   a non-numeric amount -> 400
+  ok   a band that ends before it starts -> 400
+  ok   a zone tagged for vehicle types -> 400
+  ok   a zone that does not exist -> 400
+  ok   a create with no location at all -> 400
+  ok   an empty settings map -> 400
+  ok   POST /delivery-charge/runner -> 400 (not a registered menu yet)
+  ok     and nothing was written
+
+--- distance-wise ON freezes the scope of a scheme that exists ---
+  editing #2 (location 0, band 200→500)
+  ok   change its location -> 400
+  ok   widen its band -> 400
+  ok   echoing the stored band saves nothing -> 400
+  ok   save new amounts beside the echoed band -> 200
+  ok     order total rewritten
+  ok     charge above rewritten
+  ok     charge below untouched
+  ok     the band is still where it was
+  ok     the location is still the sentinel
+  ok     the money edit lands in the DTO too
+  ok   PUT with an empty body -> 400
+  ok   blanking a required amount -> 400
+  ok   blanking an optional amount -> 200
+  ok     radius stored as 0
+  ok   an out-of-range amount on edit -> 400
+  ok   PUT a row that does not exist -> 404
+  ok   the list carries every live scheme, newest first
+  ok     and reports the switches beside them
+  ok     Buy Any Service too, because the Genie module is on
+
+--- status, on the scheme that owns a whole zone ---
+  deactivating #4, the scheme that owns zone two
+  ok   PATCH to Inactive -> 200
+  ok     the row is Inactive
+  ok     an Inactive scheme is still readable
+  ok     and still editable, as the legacy list allowed
+  ok     and drops out of the Active filter
+  ok     and appears in the Inactive one
+  ok   PATCH to Deleted is refused (that is what DELETE is for)
+  ok     and the row kept its status
+  ok   PATCH back to Active -> 200
+  ok     the row is Active again
+
+--- delete is name-confirmed, soft, and deaf to the distance-wise table ---
+  ok   create a scheme to delete -> 201
+  ok   the other table now carries a row with that same number
+  ok   DELETE with the wrong confirmation -> 400
+  ok     and it names the zone instead
+  ok   DELETE with no confirmation -> 400
+  ok   DELETE it while the number also keys a distance-wise row -> 200
+  ok     the row is kept and marked Deleted
+  ok     the list dropped exactly one
+  ok     and the other screen's row is still there, untouched
+  ok   GET the deleted scheme -> 404
+  ok   PATCH the deleted scheme -> 404
+  ok   PUT the deleted scheme -> 404
+  ok   DELETE it twice -> 404
+  ok     and the shared rows the other menus would list are still here
+
+--- flipping ENABLE_CUSTOM_DELIVERY_CHARGE_ORDER to No (waiting 65s for the meta cache) ---
+  ok   the list reports distance-wise off
+  ok     and Buy Any Service is still on
+  ok   the add form drops the band fields
+  ok     and keeps the Buy Any Service ones
+  ok     the scope is editable again
+
+--- distance-wise OFF: one scheme per location, band written as 0→∞ ---
+  ok   create without any band at all -> 201
+  ok     next id
+  ok     the band defaults to starting at 0
+  ok     and running to the sentinel, so the row keeps its meaning if the switch flips back
+  ok     Buy Any Service amounts are 0 while unsent
+  ok     the DTO calls the band open
+  ok   a second scheme for the same location -> 400
+  ok     and it names the scheme that holds it
+  ok   a scheme for a location another row already holds -> 400
+  ok   a scheme for All locations, which the legacy row owns -> 400
+  ok     and it names a live scheme of that location, never the deleted one
+  ok   sending a band while the switch is off -> 400
+  ok   editing a band while the switch is off -> 400
+  ok   move the scheme to an empty location -> 200
+  ok     the location column is written
+  ok   move it onto a location that has one -> 400
+  ok   move it back -> 200
+  ok     the location column is written again
+
+--- a Deleted scheme does not hold its location ---
+  ok   DELETE the zone's only scheme -> 200
+  ok     the row is kept and marked Deleted
+  ok   price the zone whose scheme was deleted -> 201
+  ok     the hidden row is untouched in the table
+  ok     and it is not the row just written
+  ok   DELETE it again -> 200
+  ok     leaving the zone to the one hidden row
+
+--- flipping ENABLE_CUSTOM_DELIVERY_CHARGE_ORDER back to Yes and dropping the zones ---
+  ok   the list reports distance-wise on again
+  ok     and the band fields are back
+live rows after the run: 4 (baseline 1)
+zones seeded and dropped: 8, 9, 10, 11, 12
+expected: the created rows sit in the table as Deleted until `node scripts/b154.mjs restore`
+
+b154-write: 118 ok, 0 failed

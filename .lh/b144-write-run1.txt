@@ -1,0 +1,153 @@
+  ok   login as the test super admin
+  ok   the runner detail lists the shipped languages
+
+--- cross-app write isolation: the app in the URL is the row you may touch ---
+  ok   PUT /runner/280 (Genie's row) is 404
+  ok     and the Genie row's bytes are untouched
+  ok   PUT /genie/287 (Runner's row) is 404
+  ok     and the Runner row's bytes are untouched
+  ok   PATCH /runner/280/status is 404
+  ok     the Genie row is still Active
+  ok   PATCH /genie/287/status is 404
+  ok     the Runner row is still Active
+  ok   a cross-app promote attempt is 404 too
+  ok     nothing was promoted
+
+--- one language, one column: a name edit lands where the editor sent it ---
+  ok   PUT /runner/287 {names:{AR}} is accepted
+  ok     the fresh DTO reads it back
+  ok     the column really holds it
+  ok   only vCategory_AR moved, none of the other 25 languages
+  ok   the Genie row's 26 names are byte-identical
+  ok   the list's name count is unchanged by one language
+  ok   the Runner save logs service_content_runner_updated
+  ok     and logs no genie event
+  ok   a Genie save still logs its own, byte-identical event name
+  ok   both rollbacks leave no trace
+  ok   a blank name is legal and lands as empty (the legacy form allowed it)
+  ok     the list then counts 25 filled languages
+  ok     and the display name falls back to another language
+  ok   restored, the Runner row is byte-identical again
+
+--- names: what the screen refuses to store ---
+  ok   HTML in a name is refused
+  ok   a 201-character name is refused
+  ok   a zero-width character is refused
+  ok   an unknown language code is refused by name
+  ok   a non-text name is refused by the payload schema
+  ok   more languages than one save may carry is refused
+  ok   an empty group is refused rather than a silent no-op
+  ok   a body with no group at all is refused
+  ok   none of the refusals wrote a byte
+  ok     nor on the sibling row
+
+--- settings: the unset enum value is readable, never writable ---
+  ok   the OTP column is stored as '' today
+  ok   saving that '' back is refused with the choices the form offers
+  ok     and nothing was written
+  ok   choosing Yes writes Yes
+  ok     in the column
+  ok     and in the fresh DTO
+  ok   and choosing No writes No
+  ok     the DTO follows
+  ok   restored from the snapshot, it reads '' again
+  ok   a setting this screen does not own is refused by name
+  ok   an enum outside the DDL's members is refused
+  ok   a word in a numeric column is refused
+  ok   a fraction in a whole-number column is refused
+  ok   an order past the DDL's range is refused
+  ok   more settings than one save may carry is refused
+  ok   a setting sent as null never reaches the merge rule that would skip it
+  ok   both orders round-trip
+  ok     iDisplayOrder
+  ok     iDisplayOrderHomepage
+  ok   the Genie row's own 5 / 4 did not move
+  ok   and the Runner row is back to 6 / 61
+
+--- blobs: the editor sends what changed, the service keeps the rest ---
+  ok   the home column carries 26 keys
+  ok     and no sub-title key at all
+  ok   changing one language of one base is accepted
+  ok     that key is the new text
+  ok     and the other 25 keys are verbatim, not rebuilt from the request
+  ok     the key count did not change
+  ok   the promote-title column of the same row did not move
+  ok   re-sending a stored value verbatim is accepted
+  ok     and writes nothing at all — the bytes are identical
+  ok   a sub-title the row never carried can be added
+  ok     the column now has 27 keys
+  ok     and the new one holds the text
+  ok     the titles all survived the second merge
+  ok   the promote-title column is 26 keys, every one blank
+  ok     as the Runner row stores it
+  ok   filling one of them is accepted
+  ok     that key holds the text
+  ok     and the 25 blanks are still blanks, not keys the merge dropped
+  ok   clearing it again leaves the stored shape
+  ok   an unknown text block is refused by name
+  ok   a base that column does not carry is refused
+  ok   a blob key in an unknown language is refused
+  ok   a title past 255 characters is refused
+  ok   a sub-title past its own, larger cap is refused too
+  ok   a non-text blob field never reaches the column
+  ok   markup in copy is refused
+  ok   no refusal rewrote a byte of the home copy
+  ok     nor of the promote titles
+  ok   both blobs are byte-identical to the snapshot again
+  ok     including the promote titles' 26 blanks
+  ok   the Runner row is whole again
+
+--- the promote banner is one flag across the whole table ---
+  ok   nothing is promoted at the start
+  ok   the Genie row holds it
+  ok   promoting the Runner row is accepted
+  ok     and the response counts what it cleared
+  ok     only the Runner row is promoted now
+  ok     the fresh DTO says so
+  ok     the Genie row lost the flag
+  ok     and lost nothing else — every other column of that row is verbatim
+  ok   promoting from the other screen reports the Runner row
+  ok     with the cleared count naming one row
+  ok     and the table agrees
+  ok   switching it off leaves nothing promoted
+  ok     as promised
+  ok   the Genie row is byte-identical to the snapshot
+  ok   and the Runner row never kept a flag
+
+--- status: one row's switch, nothing else ---
+  ok   the Runner row can be switched off
+  ok     in the DTO
+  ok     in the column
+  ok   the Genie row did not move
+  ok   the app's list still shows its own row, now Inactive
+  ok     and the other app's list is unaffected
+  ok   a status the DDL does not have is refused
+  ok   and it comes back
+  ok   the Runner row's other bytes never moved during the flip
+
+--- a save repeating everything the row already holds ---
+  ok   the save without the unset OTP is accepted
+  ok     and rewrote nothing — the row is byte-identical
+  ok   adding the stored-but-unwritable OTP value back refuses the whole save
+  ok     leaving the row untouched rather than half-saved
+
+--- artwork: the columns, the bytes, and the orphan a refusal must not leave ---
+  ok   POST /runner/280/image/promote (Genie's row) is 404
+  ok     and the file multer already wrote is unlinked again
+  ok   a multipart POST with no file is refused
+  ok   a file that is not an image is refused
+  ok     and the column still names nothing
+  ok     still no orphan on disk
+  ok   attaching a banner image to the Runner row is accepted
+  ok     the column names the new file
+  ok     the file is inside this app's upload root
+  ok     and it streams back
+  ok       as an image
+  ok   the column is empty again, as the snapshot held it
+  ok     and this run leaves no uploaded file behind
+  ok   the whole Runner row matches its starting bytes
+  ok   the Genie row matches its own
+
+b144-write: 131 ok, 0 failed
+expected next: node scripts/b144.mjs restore  (it should report 0 columns rewritten)
+               node scripts/b144.mjs fingerprint after && diff .lh/b144-before.txt .lh/b144-after.txt

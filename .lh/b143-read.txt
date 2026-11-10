@@ -1,0 +1,71 @@
+{"admin":{"id":15,"firstName":"Test","lastName":"SuperAdmin","email":"admin.test@ondemand.local","groupId":1},"roles":[1],"permissions":["*"],"accessTokenExpiresIn":900}
+--- reads: the runner slice sees group 69 and no other app’s rows ---
+GET /banner/runner/list (was an unknown app)               200  OK
+runner list holds exactly one group, id 69                 YES  OK
+labelled by Latvian, since the group has no English row    YES  OK
+language counts say 2 of 26, not 26 blank ones             YES  OK
+both languages carry text, group is Active, slot 2         YES  OK
+the shipped picture is named and reported present          YES  OK
+GET /banner/runner/69 (own slice group)                    200  OK
+GET /banner/runner/69/image (legacy artwork bytes)         200  OK
+GET /banner/genie/68/image (neighbour still served)        200  OK
+GET /banner/runner/68 (a genie group) -> 404               404  OK
+GET /banner/runner/50 (a parcel group) -> 404              404  OK
+GET /banner/runner/70 (a parcel group) -> 404              404  OK
+GET /banner/runner/999999 (missing 404)                    404  OK
+GET /banner/runner/abc (bad id 400)                        400  OK
+GET /banner/runner/0 (not a row id 400)                    400  OK
+GET /banner/runner/defaults (next slot 3)                  200  OK
+--- reads: the detail view offers all 26 languages, 2 filled ---
+the edit form lists 26 language fields                     YES  OK
+English is present as an empty field, not a missing one    YES  OK
+the two shipped languages hold their stored text           YES  OK
+translationsFilled counts text, not rows                   YES  OK
+the title falls back to the first language with text       YES  OK
+slot, colour and location read off the group               YES  OK
+defaults pre-fills the runner slot 3 and 26 blank languages YES  OK
+--- reads: filters are group properties over this slice only ---
+search on the Latvian text finds it                        YES  OK
+search on genie’s English title finds nothing            YES  OK
+the Active filter keeps the group                          YES  OK
+the Inactive filter excludes it                            YES  OK
+a search on the id text finds nothing                      YES  OK
+paging reports one page of one group                       YES  OK
+page 2 is empty, not an error                              YES  OK
+--- reads: the other two slices still exclude the runner group ---
+genie list is still just group 68                          YES  OK
+genie list never shows the runner title                    YES  OK
+parcel list is still groups 50 and 70 only                 YES  OK
+GET /banner/genie/69 (a runner group) -> 404               404  OK
+GET /banner/delivery/69 (a runner group) -> 404            404  OK
+GET /banner/store/list (no such slice 400)                 400  OK
+GET /banner/list (old flat path gone)                      404  OK
+--- reads: auth gates the runner keys before any query ---
+GET /banner/runner/list (anonymous)                        401  OK
+GET ... without X-Requested-With                           401  OK
+POST /banner/runner (anonymous)                            401  OK
+GET image (anonymous)                                      401  OK
+--- reads: the permission tree exposes sub-group 143’s five seeded keys ---
+  ok   tree carries view-banner-runner-delivery
+  ok   tree carries create-banner-runner-delivery
+  ok   tree carries edit-banner-runner-delivery
+  ok   tree carries delete-banner-runner-delivery
+  ok   tree carries update-status-banner-runner-delivery
+--- runner list shape (what the #sub-143 panel renders) ---
+{
+    "items": [
+        {
+            "id": 69,
+            "title": "Pieg\u0101des skr\u0113j\u0113js",
+            "image": "20230113155822173.png",
+            "hasImage": true,
+            "status": "Active",
+            "displayOrder": 2,
+            "statusBarColor": "",
+            "translationsFilled": 2,
+            "languageCount": 2,
+            "rowCount": 2
+        }
+    ],
+    "total": 1
+}

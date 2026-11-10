@@ -1,0 +1,56 @@
+columns: 12 | iDeliveyChargeId, iLocationId, fOrderPriceValue, fDeliveryChargeAbove, fDeliveryChargeBelow, fFreeOrderPriceSubtotal, iFreeDeliveryRadius, eStatus, iDistanceRangeFrom, iDistanceRangeTo, fDeliveryChargeBuyAnyService, fDeliveryChargeBuyAnyServiceCancelledOrder
+rows: 1 | distinct id: 1 | max id: 1
+
+--- every row of the table both menus price (no slice to scope) ---
+┌─────────┬────┬─────┬──────────┬────────────┬───────┬───────┬───────────┬────────────┬───────┬─────┬────────┬──────────────┬──────────┐
+│ (index) │ id │ loc │ location │ orderTotal │ above │ below │ freeAbove │ freeRadius │ dFrom │ dTo │ buyAny │ buyAnyCancel │ eStatus  │
+├─────────┼────┼─────┼──────────┼────────────┼───────┼───────┼───────────┼────────────┼───────┼─────┼────────┼──────────────┼──────────┤
+│ 0       │ 1  │ 0   │ null     │ 50         │ 5     │ 3     │ 500       │ 0          │ 0     │ 200 │ 15     │ 5            │ 'Active' │
+└─────────┴────┴─────┴──────────┴────────────┴───────┴───────┴───────────┴────────────┴───────┴─────┴────────┴──────────────┴──────────┘
+
+--- the switches that decide which fields exist at all ---
+┌─────────┬───────────────────────────────────────┬────────┬──────────┐
+│ (index) │ vName                                 │ vValue │ eStatus  │
+├─────────┼───────────────────────────────────────┼────────┼──────────┤
+│ 0       │ 'ENABLE_CUSTOM_DELIVERY_CHARGE_ORDER' │ 'Yes'  │ 'Active' │
+│ 1       │ 'ENABLE_BUY_ANY_SERVICE_MODULE'       │ 'Yes'  │ 'Active' │
+└─────────┴───────────────────────────────────────┴────────┴──────────┘
+
+--- the zones the shared location dropdown offers (eFor marker) ---
+┌─────────┐
+│ (index) │
+├─────────┤
+└─────────┘
+
+--- the sub-groups of this screen, names verbatim from the DB ---
+┌─────────┬─────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬──────────────┬───────────┬──────────┐
+│ (index) │ id  │ name                                                                                                                                        │ eFor         │ iGroupsId │ eStatus  │
+├─────────┼─────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼──────────────┼───────────┼──────────┤
+│ 0       │ 27  │ 'Utility'                                                                                                                                   │ 'DeliverAll' │ 9         │ 'Active' │
+│ 1       │ 154 │ 'Delivery Charges'                                                                                                                          │ 'Genie'      │ 33        │ 'Active' │
+│ 2       │ 157 │ 'Delivery Charges(Please note that Delivery Charges defined here will be applied into Delivery Genie, Delivery Runner & Store Deliveries.)' │ 'Genie'      │ 34        │ 'Active' │
+└─────────┴─────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴──────────────┴───────────┴──────────┘
+
+--- the three key families over that one table ---
+┌─────────┬─────┬──────────────────────────────────────────────────┬──────────┬──────────────────┬──────────────────────┐
+│ (index) │ id  │ permission_name                                  │ status   │ display_group_id │ display_sub_group_id │
+├─────────┼─────┼──────────────────────────────────────────────────┼──────────┼──────────────────┼──────────────────────┤
+│ 0       │ 352 │ 'view-delivery-charges'                          │ 'Active' │ 9                │ 27                   │
+│ 1       │ 353 │ 'create-delivery-charges'                        │ 'Active' │ 9                │ 27                   │
+│ 2       │ 354 │ 'edit-delivery-charges'                          │ 'Active' │ 9                │ 27                   │
+│ 3       │ 355 │ 'delete-delivery-charges'                        │ 'Active' │ 9                │ 27                   │
+│ 4       │ 356 │ 'update-status-delivery-charges'                 │ 'Active' │ 9                │ 27                   │
+│ 5       │ 823 │ 'view-delivery-charges-genie-delivery'           │ 'Active' │ 33               │ 154                  │
+│ 6       │ 824 │ 'create-delivery-charges-genie-delivery'         │ 'Active' │ 33               │ 154                  │
+│ 7       │ 825 │ 'edit-delivery-charges-genie-delivery'           │ 'Active' │ 33               │ 154                  │
+│ 8       │ 826 │ 'delete-delivery-charges-genie-delivery'         │ 'Active' │ 33               │ 154                  │
+│ 9       │ 827 │ 'update-status-delivery-charges-genie-delivery'  │ 'Active' │ 33               │ 154                  │
+│ 10      │ 838 │ 'view-delivery-charges-runner-delivery'          │ 'Active' │ 34               │ 157                  │
+│ 11      │ 839 │ 'create-delivery-charges-runner-delivery'        │ 'Active' │ 34               │ 157                  │
+│ 12      │ 840 │ 'delete-delivery-charges-runner-delivery'        │ 'Active' │ 34               │ 157                  │
+│ 13      │ 841 │ 'update-status-delivery-charges-runner-delivery' │ 'Active' │ 34               │ 157                  │
+│ 14      │ 847 │ 'edit-delivery-charges-runner-delivery'          │ 'Active' │ 34               │ 157                  │
+└─────────┴─────┴──────────────────────────────────────────────────┴──────────┴──────────────────┴──────────────────────┘
+
+note: runner's edit key (847) sorts AFTER delete and update-status, because the 
+seed gave it the last id — the tree lists sub-group 157 as view, create, delete, update-status, edit. Genie's family (823–827) runs in action order.

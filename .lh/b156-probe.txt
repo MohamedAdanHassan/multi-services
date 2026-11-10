@@ -1,0 +1,79 @@
+columns: 131 | iVehicleTypeId, iVehicleCategoryId, iLocationid, iCountryId, iStateId, iCityId …
+rows: 469 | distinct id: 469 | max id: 647
+┌─────────┬──────────────┬────────────┬─────┬───────────┐
+│ (index) │ eType        │ eStatus    │ n   │ max_order │
+├─────────┼──────────────┼────────────┼─────┼───────────┤
+│ 0       │ 'Ride'       │ 'Active'   │ 11  │ 103       │
+│ 1       │ 'Ride'       │ 'Inactive' │ 3   │ 10        │
+│ 2       │ 'Ride'       │ 'Deleted'  │ 1   │ 1         │
+│ 3       │ 'Deliver'    │ 'Active'   │ 6   │ 103       │
+│ 4       │ 'Deliver'    │ 'Deleted'  │ 1   │ 1         │
+│ 5       │ 'UberX'      │ 'Active'   │ 440 │ 272       │
+│ 6       │ 'UberX'      │ 'Inactive' │ 2   │ 2         │
+│ 7       │ 'DeliverAll' │ 'Active'   │ 2   │ 3         │
+│ 8       │ 'TaxiBid'    │ 'Active'   │ 3   │ 3         │
+└─────────┴──────────────┴────────────┴─────┴───────────┘
+
+--- the slice genie and runner share (eType='DeliverAll') ---
+┌─────────┬─────┬─────────────────────────┬────────┬─────────┬──────────┬────────┬────────┬────────────┬───────┬──────────┐
+│ (index) │ id  │ name                    │ icon   │ fare    │ delivery │ cancel │ radius │ commission │ order │ status   │
+├─────────┼─────┼─────────────────────────┼────────┼─────────┼──────────┼────────┼────────┼────────────┼───────┼──────────┤
+│ 0       │ 406 │ '2 Wheeler / Motorbike' │ 'Bike' │ 'Fixed' │ 0        │ 0      │ 100    │ 12         │ 3     │ 'Active' │
+│ 1       │ 407 │ 'Car'                   │ 'Car'  │ 'Fixed' │ 0        │ 0      │ 50     │ 12         │ 3     │ 'Active' │
+└─────────┴─────┴─────────────────────────┴────────┴─────────┴──────────┴────────┴────────┴────────────┴───────┴──────────┘
+next iDisplayOrder in the shared slice: 4
+
+--- the legacy page's own sharing warning, verbatim from the DB ---
+┌─────────┬─────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬─────────┬───────────┬──────────┐
+│ (index) │ id  │ name                                                                                                                                 │ eFor    │ iGroupsId │ eStatus  │
+├─────────┼─────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┼───────────┼──────────┤
+│ 0       │ 153 │ 'Vehicle Type'                                                                                                                       │ 'Genie' │ 33        │ 'Active' │
+│ 1       │ 156 │ 'Vehicle Type (Please note that Vehicle Type defined here will be applied into Delivery Genie, Delivery Runner & Store Deliveries.)' │ 'Genie' │ 34        │ 'Active' │
+└─────────┴─────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┴───────────┴──────────┘
+
+--- the two key families over that one slice ---
+┌─────────┬─────┬──────────────────────────────────────────────┬──────────┬──────────────────────┐
+│ (index) │ id  │ permission_name                              │ status   │ display_sub_group_id │
+├─────────┼─────┼──────────────────────────────────────────────┼──────────┼──────────────────────┤
+│ 0       │ 75  │ 'view-vehicle-type-taxi-service'             │ 'Active' │ 15                   │
+│ 1       │ 76  │ 'create-vehicle-type-taxi-service'           │ 'Active' │ 15                   │
+│ 2       │ 77  │ 'update-status-vehicle-type-taxi-service'    │ 'Active' │ 15                   │
+│ 3       │ 78  │ 'delete-vehicle-type-taxi-service'           │ 'Active' │ 15                   │
+│ 4       │ 79  │ 'edit-vehicle-type-taxi-service'             │ 'Active' │ 15                   │
+│ 5       │ 325 │ 'view-vehicle-type-deliverall'               │ 'Active' │ 24                   │
+│ 6       │ 326 │ 'create-vehicle-type-deliverall'             │ 'Active' │ 24                   │
+│ 7       │ 327 │ 'edit-vehicle-type-deliverall'               │ 'Active' │ 24                   │
+│ 8       │ 328 │ 'delete-vehicle-type-deliverall'             │ 'Active' │ 24                   │
+│ 9       │ 329 │ 'update-status-vehicle-type-deliverall'      │ 'Active' │ 24                   │
+│ 10      │ 227 │ 'view-vehicle-type-medical'                  │ 'Active' │ 65                   │
+│ 11      │ 228 │ 'create-vehicle-type-medical'                │ 'Active' │ 65                   │
+│ 12      │ 229 │ 'edit-vehicle-type-medical'                  │ 'Active' │ 65                   │
+│ 13      │ 230 │ 'delete-vehicle-type-medical'                │ 'Active' │ 65                   │
+│ 14      │ 231 │ 'update-status-vehicle-type-medical'         │ 'Active' │ 65                   │
+│ 15      │ 502 │ 'view-vehicle-type-parcel-delivery'          │ 'Active' │ 138                  │
+│ 16      │ 503 │ 'create-vehicle-type-parcel-delivery'        │ 'Active' │ 138                  │
+│ 17      │ 504 │ 'edit-vehicle-type-parcel-delivery'          │ 'Active' │ 138                  │
+│ 18      │ 505 │ 'delete-vehicle-type-parcel-delivery'        │ 'Active' │ 138                  │
+│ 19      │ 506 │ 'update-status-vehicle-type-parcel-delivery' │ 'Active' │ 138                  │
+│ 20      │ 818 │ 'view-vehicle-type-genie-delivery'           │ 'Active' │ 153                  │
+│ 21      │ 819 │ 'create-vehicle-type-genie-delivery'         │ 'Active' │ 153                  │
+│ 22      │ 820 │ 'edit-vehicle-type-genie-delivery'           │ 'Active' │ 153                  │
+│ 23      │ 821 │ 'delete-vehicle-type-genie-delivery'         │ 'Active' │ 153                  │
+│ 24      │ 822 │ 'update-status-vehicle-type-genie-delivery'  │ 'Active' │ 153                  │
+│ 25      │ 833 │ 'view-vehicle-type-runner-delivery'          │ 'Active' │ 156                  │
+│ 26      │ 834 │ 'create-vehicle-type-runner-delivery'        │ 'Active' │ 156                  │
+│ 27      │ 835 │ 'edit-vehicle-type-runner-delivery'          │ 'Active' │ 156                  │
+│ 28      │ 836 │ 'delete-vehicle-type-runner-delivery'        │ 'Active' │ 156                  │
+│ 29      │ 837 │ 'update-status-vehicle-type-runner-delivery' │ 'Active' │ 156                  │
+└─────────┴─────┴──────────────────────────────────────────────┴──────────┴──────────────────────┘
+
+--- rows a runner screen must never reach, by id ---
+┌─────────┬────┬─────────┬──────────────────────────────┐
+│ (index) │ id │ eType   │ name                         │
+├─────────┼────┼─────────┼──────────────────────────────┤
+│ 0       │ 1  │ 'Ride'  │ 'Fair'                       │
+│ 1       │ 2  │ 'Ride'  │ 'Normal'                     │
+│ 2       │ 3  │ 'Ride'  │ 'Luxurious'                  │
+│ 3       │ 8  │ 'UberX' │ 'External washing'           │
+│ 4       │ 29 │ 'UberX' │ 'Detailed interior cleaning' │
+└─────────┴────┴─────────┴──────────────────────────────┘

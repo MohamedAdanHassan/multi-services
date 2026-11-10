@@ -1,0 +1,34 @@
+
+===== custom-delivery-charges family =====
+357 | view-custom-delivery-charges | View Distance wise Delivery Charges | Active | 9 | 27 | DeliverAll | All
+358 | create-custom-delivery-charges | Create Distance wise Delivery Charges | Active | 9 | 27 | DeliverAll | All
+359 | edit-custom-delivery-charges | Edit Distance wise Delivery Charges | Active | 9 | 27 | DeliverAll | All
+360 | delete-custom-delivery-charges | Delete Distance wise Delivery Charges | Active | 9 | 27 | DeliverAll | All
+361 | update-status-custom-delivery-charges | Update Distance wise Delivery Charges Status  | Inactive | 9 | 27 | DeliverAll | All
+828 | view-custom-delivery-charges-genie-delivery | View Distance wise Delivery Charges | Active | 33 | 155 | Genie | All
+829 | create-custom-delivery-charges-genie-delivery | Create Distance wise Delivery Charges | Active | 33 | 155 | Genie | All
+830 | edit-custom-delivery-charges-genie-delivery | Edit Distance wise Delivery Charges | Active | 33 | 155 | Genie | All
+831 | delete-custom-delivery-charges-genie-delivery | Delete Distance wise Delivery Charges | Active | 33 | 155 | Genie | All
+832 | update-status-custom-delivery-charges-genie-delivery | Update Distance wise Delivery Charges Status  | Inactive | 33 | 155 | Genie | All
+842 | view-custom-delivery-charges-runner-delivery | View Distance wise Delivery Charges | Active | 34 | 158 | Runner | All
+843 | create-custom-delivery-charges-runner-delivery | Create Distance wise Delivery Charges | Active | 34 | 158 | Runner | All
+844 | edit-custom-delivery-charges-runner-delivery | Edit Distance wise Delivery Charges | Active | 34 | 158 | Runner | All
+845 | delete-custom-delivery-charges-runner-delivery | Delete Distance wise Delivery Charges | Active | 34 | 158 | Runner | All
+846 | update-status-custom-delivery-charges-runner-delivery | Update Distance wise Delivery Charges Status  | Inactive | 34 | 158 | Runner | All
+
+===== delivery-charges family (all apps) =====
+352 | view-delivery-charges | View Delivery Charges | Active | 9 | 27 | DeliverAll | All
+353 | create-delivery-charges | Create Delivery Charges | Active | 9 | 27 | DeliverAll | All
+354 | edit-delivery-charges | Edit Delivery Charges | Active | 9 | 27 | DeliverAll | All
+355 | delete-delivery-charges | Delete Delivery Charges | Active | 9 | 27 | DeliverAll | All
+356 | update-status-delivery-charges | Update Delivery Charges status  | Active | 9 | 27 | DeliverAll | All
+823 | view-delivery-charges-genie-delivery | View Delivery Charges | Active | 33 | 154 | Genie | All
+824 | create-delivery-charges-genie-delivery | Create Delivery Charges | Active | 33 | 154 | Genie | All
+825 | edit-delivery-charges-genie-delivery | Edit Delivery Charges | Active | 33 | 154 | Genie | All
+826 | delete-delivery-charges-genie-delivery | Delete Delivery Charges | Active | 33 | 154 | Genie | All
+827 | update-status-delivery-charges-genie-delivery | Update Delivery Charges status  | Active | 33 | 154 | Genie | All
+838 | view-delivery-charges-runner-delivery | View Delivery Charges | Active | 34 | 157 | Runner | All
+839 | create-delivery-charges-runner-delivery | Create Delivery Charges | Active | 34 | 157 | Runner | All
+840 | delete-delivery-charges-runner-delivery | Delete Delivery Charges | Active | 34 | 157 | Runner | All
+841 | update-status-delivery-charges-runner-delivery | Update Delivery Charges status  | Active | 34 | 157 | Runner | All
+847 | edit-delivery-charges-runner-delivery | Edit Delivery Charges | Active | 34 | 157 | Runner | All

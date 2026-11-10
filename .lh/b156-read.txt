@@ -1,0 +1,55 @@
+{"admin":{"id":15,"firstName":"Test","lastName":"SuperAdmin","email":"admin.test@ondemand.local","groupId":1},"roles":[1],"permissions":["*"],"accessTokenExpiresIn":900}
+--- reads: the runner app answers over the shared DeliverAll slice ---
+GET /vehicle-type/runner/list (was an unknown app)             200  OK
+runner list holds exactly the two DeliverAll rows              YES  OK
+the list rows keep the legacy money columns                    YES  OK
+the row keeps its own name and icon                            YES  OK
+both shipped rows are fully translated (26 of 26)              YES  OK
+the runner detail reports the shared eType                     YES  OK
+the runner form offers the same 26 languages                   YES  OK
+GET /vehicle-type/runner/406 (shared row)                      200  OK
+GET /vehicle-type/runner/407 (shared row)                      200  OK
+GET /vehicle-type/runner/defaults                              200  OK
+defaults are a blank row of the shared slice                   YES  OK
+defaults carry no category options, as genie has none          YES  OK
+GET /vehicle-type/runner/list?page=1&limit=50                  200  OK
+GET /vehicle-type/runner/list?status=Active                    200  OK
+GET /vehicle-type/runner/list?search=Car                       200  OK
+search narrows to the one Car row                              YES  OK
+search for a taxi word finds nothing here                      YES  OK
+--- reads: runner and genie are one row seen twice, not two copies ---
+runner list body == genie list body                            YES  OK
+runner 406 detail == genie 406 detail                          YES  OK
+runner 407 detail == genie 407 detail                          YES  OK
+runner defaults == genie defaults                              YES  OK
+--- reads: the shared scope is DeliverAll and nothing wider ---
+GET /vehicle-type/runner/1 (a Ride row) 404                    404  OK
+GET /vehicle-type/runner/2 (a Ride row) 404                    404  OK
+GET /vehicle-type/runner/8 (an UberX row) 404                  404  OK
+GET /vehicle-type/runner/29 (an UberX row) 404                 404  OK
+GET /vehicle-type/runner/397 (a parcel row) 404                404  OK
+GET /vehicle-type/ride/406 (the shared row, from ride) 404     404  OK
+GET /vehicle-type/delivery/406 (the shared row, from parcel) 404 404  OK
+runner list never grows into the taxi slice                    YES  OK
+--- reads: unregistered key families stay unregistered ---
+GET /vehicle-type/medical/list (keys exist, no :app) 400       400  OK
+GET /vehicle-type/deliverall/list (keys exist, no :app) 400    400  OK
+GET /vehicle-type/store/list (no such app) 400                 400  OK
+GET /vehicle-type/runner/999999 (missing) 404                  404  OK
+GET /vehicle-type/runner/abc (bad id) 400                      400  OK
+GET /vehicle-type/list (old flat path gone) 404                404  OK
+--- reads: the slice is real, so a deleted row stays hidden from both menus ---
+no Deleted DeliverAll row leaks into the runner list           YES  OK
+--- auth: every runner path demands a session ---
+GET /vehicle-type/runner/list without a cookie                 401  OK
+GET /vehicle-type/runner/406 without a cookie                  401  OK
+GET /vehicle-type/runner/defaults without a cookie             401  OK
+--- the RBAC tree carries the five runner keys under sub-group 156 ---
+tree carries view-vehicle-type-runner-delivery                 YES  OK
+tree carries create-vehicle-type-runner-delivery               YES  OK
+tree carries edit-vehicle-type-runner-delivery                 YES  OK
+tree carries delete-vehicle-type-runner-delivery               YES  OK
+tree carries update-status-vehicle-type-runner-delivery        YES  OK
+tree still carries the genie family alongside it               YES  OK
+
+read matrix: 45 OK, 0 FAIL

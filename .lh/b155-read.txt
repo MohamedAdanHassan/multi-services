@@ -1,0 +1,317 @@
+{"admin":{"id":15,"firstName":"Test","lastName":"SuperAdmin","email":"admin.test@ondemand.local","groupId":1},"roles":[1],"permissions":["*"],"accessTokenExpiresIn":900}
+--- reads: the whole list and its paged form ---
+GET /distance-charge/genie/list                          200  OK
+GET .../list?page=1&limit=50                             200  OK
+GET .../list?limit=1 (paging really pages)               200  OK
+GET .../list?limit=99999 (clamped, not fatal)            200  OK
+GET .../list?page=99 (past the last page)                200  OK
+GET .../list?search=Car                                  200  OK
+GET .../list?search=200 (a number in a band)             200  OK
+GET .../list?search=%25_%28escape%29                     200  OK
+GET .../list?sort=vehicleType&order=asc                  200  OK
+GET .../list?sort=distanceFrom&order=desc                200  OK
+GET .../list?sort=driverCompleted                        200  OK
+GET .../list?sort=id;DROP (injection falls back)         200  OK
+GET .../list?sort=nosuchcolumn                           200  OK
+GET .../list?order=asc&limit=-5                          200  OK
+GET /distance-charge/genie/1 (band of type 406)          200  OK
+GET /distance-charge/genie/2 (band of type 407)          200  OK
+GET /distance-charge/genie/defaults                      200  OK
+--- reads: bad input, missing rows, unknown apps ---
+GET /distance-charge/genie/999999 (missing 404)          404  OK
+GET /distance-charge/genie/abc (bad id 400)              400  OK
+GET /distance-charge/genie/0 (not a row id 400)          400  OK
+GET /distance-charge/genie/-1 (negative id 400)          400  OK
+GET /distance-charge/runner/list (not registered 400)    400  OK
+GET /distance-charge/genie/list-x (id route 400)         400  OK
+GET /distance-charge/9/defaults (un-suffixed 400)        400  OK
+--- reads: auth ---
+GET /distance-charge/genie/list (anonymous)              401  OK
+GET ... without X-Requested-With                         401  OK
+POST ... (anonymous)                                     401  OK
+--- genie list shape (the unit, currency, types and chains ride along) ---
+{
+    "items": [
+        {
+            "id": 2,
+            "vehicleTypeId": 407,
+            "vehicleTypeName": "Car",
+            "vehicleMissing": false,
+            "vehicleStatus": "Active",
+            "locationId": -1,
+            "locationName": "",
+            "localizationLabel": "All Locations",
+            "distanceFrom": 0,
+            "distanceTo": 100,
+            "distanceOpen": false,
+            "distanceLabel": "0 \u2013 100",
+            "driverCompleted": 15,
+            "driverCancelled": 7,
+            "userCharge": 0,
+            "rowLabel": "Car 0-100"
+        },
+        {
+            "id": 1,
+            "vehicleTypeId": 406,
+            "vehicleTypeName": "2 Wheeler / Motorbike",
+            "vehicleMissing": false,
+            "vehicleStatus": "Active",
+            "locationId": -1,
+            "locationName": "",
+            "localizationLabel": "All Locations",
+            "distanceFrom": 0,
+            "distanceTo": 200,
+            "distanceOpen": false,
+            "distanceLabel": "0 \u2013 200",
+            "driverCompleted": 10,
+            "driverCancelled": 5,
+            "userCharge": 0,
+            "rowLabel": "2 Wheeler / Motorbike 0-200"
+        }
+    ],
+    "total": 2,
+    "features": {
+        "distanceWise": true
+    },
+    "currency": {
+        "name": "USD",
+        "symbol": "$"
+    },
+    "distanceUnit": "KMs",
+    "vehicleTypes": [
+        {
+            "id": 406,
+            "name": "2 Wheeler / Motorbike",
+            "locationId": -1,
+            "localizationLabel": "All Locations"
+        },
+        {
+            "id": 407,
+            "name": "Car",
+            "locationId": -1,
+            "localizationLabel": "All Locations"
+        }
+    ],
+    "chains": {
+        "406": {
+            "nextFrom": 200,
+            "closed": false
+        },
+        "407": {
+            "nextFrom": 100,
+            "closed": false
+        }
+    }
+}
+--- genie row 1 shape (specs, frozen scope, delete phrase) ---
+{
+    "item": {
+        "id": 1,
+        "vehicleType": {
+            "id": 406,
+            "name": "2 Wheeler / Motorbike",
+            "missing": false,
+            "status": "Active",
+            "localizationLabel": "All Locations"
+        },
+        "band": {
+            "from": 0,
+            "to": 200,
+            "open": false,
+            "label": "0 \u2013 200 KMs"
+        },
+        "settings": {
+            "fDeliveryCharge": "10.00",
+            "fDeliveryChargeCancelled": "5.00",
+            "fDeliveryChargeUser": "0.00"
+        },
+        "fieldSpecs": [
+            {
+                "column": "fDeliveryCharge",
+                "label": "Delivery pay per order to driver \u2014 completed orders",
+                "kind": "money",
+                "required": true,
+                "min": 0,
+                "max": 99999,
+                "help": "What the driver is paid for a delivery that finishes inside this band."
+            },
+            {
+                "column": "fDeliveryChargeCancelled",
+                "label": "Delivery pay per order to driver \u2014 cancelled orders",
+                "kind": "money",
+                "required": true,
+                "min": 0,
+                "max": 99999,
+                "help": "What the driver keeps when the order is cancelled."
+            },
+            {
+                "column": "fDeliveryChargeUser",
+                "label": "Amount added to the customer's delivery charge",
+                "kind": "money",
+                "required": false,
+                "min": 0,
+                "max": 99999,
+                "readOnly": true,
+                "help": "Commented out of the legacy form and always stored as 0. The apps still add it to what the customer pays, so a row carrying a value there is shown rather than hidden."
+            },
+            {
+                "column": "iDistanceRangeFrom",
+                "label": "Distance range from",
+                "kind": "distance",
+                "required": true,
+                "min": 0,
+                "max": 99999,
+                "help": "The band starts here; a vehicle type's first band starts at 0."
+            },
+            {
+                "column": "iDistanceRangeTo",
+                "label": "Distance range to",
+                "kind": "distance",
+                "required": true,
+                "min": 1,
+                "max": 99999,
+                "help": "The band ends here, or is open-ended."
+            }
+        ],
+        "scopeEditable": false,
+        "features": {
+            "distanceWise": true
+        },
+        "currency": {
+            "name": "USD",
+            "symbol": "$"
+        },
+        "distanceUnit": "KMs",
+        "vehicleTypes": [
+            {
+                "id": 406,
+                "name": "2 Wheeler / Motorbike",
+                "locationId": -1,
+                "localizationLabel": "All Locations"
+            },
+            {
+                "id": 407,
+                "name": "Car",
+                "locationId": -1,
+                "localizationLabel": "All Locations"
+            }
+        ],
+        "chains": {
+            "406": {
+                "nextFrom": 200,
+                "closed": false
+            },
+            "407": {
+                "nextFrom": 100,
+                "closed": false
+            }
+        },
+        "rowLabel": "2 Wheeler / Motorbike 0-200"
+    }
+}
+--- defaults shape (what the add form starts from) ---
+{
+    "item": {
+        "id": 0,
+        "vehicleType": {
+            "id": 0,
+            "name": "",
+            "missing": false,
+            "status": "",
+            "localizationLabel": ""
+        },
+        "band": {
+            "from": 0,
+            "to": 0,
+            "open": false,
+            "label": ""
+        },
+        "settings": {
+            "fDeliveryCharge": "",
+            "fDeliveryChargeCancelled": "",
+            "fDeliveryChargeUser": "0"
+        },
+        "fieldSpecs": [
+            {
+                "column": "fDeliveryCharge",
+                "label": "Delivery pay per order to driver \u2014 completed orders",
+                "kind": "money",
+                "required": true,
+                "min": 0,
+                "max": 99999,
+                "help": "What the driver is paid for a delivery that finishes inside this band."
+            },
+            {
+                "column": "fDeliveryChargeCancelled",
+                "label": "Delivery pay per order to driver \u2014 cancelled orders",
+                "kind": "money",
+                "required": true,
+                "min": 0,
+                "max": 99999,
+                "help": "What the driver keeps when the order is cancelled."
+            },
+            {
+                "column": "fDeliveryChargeUser",
+                "label": "Amount added to the customer's delivery charge",
+                "kind": "money",
+                "required": false,
+                "min": 0,
+                "max": 99999,
+                "readOnly": true,
+                "help": "Commented out of the legacy form and always stored as 0. The apps still add it to what the customer pays, so a row carrying a value there is shown rather than hidden."
+            },
+            {
+                "column": "iDistanceRangeFrom",
+                "label": "Distance range from",
+                "kind": "distance",
+                "required": true,
+                "min": 0,
+                "max": 99999,
+                "help": "The band starts here; a vehicle type's first band starts at 0."
+            },
+            {
+                "column": "iDistanceRangeTo",
+                "label": "Distance range to",
+                "kind": "distance",
+                "required": true,
+                "min": 1,
+                "max": 99999,
+                "help": "The band ends here, or is open-ended."
+            }
+        ],
+        "scopeEditable": true,
+        "features": {
+            "distanceWise": true
+        },
+        "currency": {
+            "name": "USD",
+            "symbol": "$"
+        },
+        "distanceUnit": "KMs",
+        "vehicleTypes": [
+            {
+                "id": 406,
+                "name": "2 Wheeler / Motorbike",
+                "locationId": -1,
+                "localizationLabel": "All Locations"
+            },
+            {
+                "id": 407,
+                "name": "Car",
+                "locationId": -1,
+                "localizationLabel": "All Locations"
+            }
+        ],
+        "chains": {
+            "406": {
+                "nextFrom": 200,
+                "closed": false
+            },
+            "407": {
+                "nextFrom": 100,
+                "closed": false
+            }
+        },
+        "rowLabel": ""
+    }
+}

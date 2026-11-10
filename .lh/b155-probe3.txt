@@ -1,0 +1,27 @@
+columns: 8 | iDeliveyChargeId, iDistanceRangeFrom, iDistanceRangeTo, fDeliveryCharge, eStatus, fDeliveryChargeUser, fDeliveryChargeCancelled, iVehicleTypeId
+rows: 2 | max id: 2
+bands:
+{"id":1,"vehicleTypeId":406,"vehicleType":"2 Wheeler / Motorbike","vehicleStatus":"Active","loc":-1,"locationName":null,"dFrom":0,"dTo":200,"driverDone":"10.00","driverCancel":"5.00","userCharge":"0.00","eStatus":"Active"}
+{"id":2,"vehicleTypeId":407,"vehicleType":"Car","vehicleStatus":"Active","loc":-1,"locationName":null,"dFrom":0,"dTo":100,"driverDone":"15.00","driverCancel":"7.00","userCharge":"0.00","eStatus":"Active"}
+switches:
+{"vName":"DEFAULT_DISTANCE_UNIT","vValue":"KMs","eStatus":"Active"}
+{"vName":"ENABLE_CUSTOM_DELIVERY_CHARGE_ORDER","vValue":"Yes","eStatus":"Active"}
+deliverable vehicle types:
+{"iVehicleTypeId":406,"vVehicleType_EN":"2 Wheeler / Motorbike","iLocationId":-1,"eStatus":"Active"}
+{"iVehicleTypeId":407,"vVehicleType_EN":"Car","iLocationId":-1,"eStatus":"Active"}
+permission keys:
+{"id":357,"permission_name":"view-custom-delivery-charges","status":"Active","display_group_id":9,"display_sub_group_id":27,"eFor":"DeliverAll"}
+{"id":358,"permission_name":"create-custom-delivery-charges","status":"Active","display_group_id":9,"display_sub_group_id":27,"eFor":"DeliverAll"}
+{"id":359,"permission_name":"edit-custom-delivery-charges","status":"Active","display_group_id":9,"display_sub_group_id":27,"eFor":"DeliverAll"}
+{"id":360,"permission_name":"delete-custom-delivery-charges","status":"Active","display_group_id":9,"display_sub_group_id":27,"eFor":"DeliverAll"}
+{"id":361,"permission_name":"update-status-custom-delivery-charges","status":"Inactive","display_group_id":9,"display_sub_group_id":27,"eFor":"DeliverAll"}
+{"id":828,"permission_name":"view-custom-delivery-charges-genie-delivery","status":"Active","display_group_id":33,"display_sub_group_id":155,"eFor":"Genie"}
+{"id":829,"permission_name":"create-custom-delivery-charges-genie-delivery","status":"Active","display_group_id":33,"display_sub_group_id":155,"eFor":"Genie"}
+{"id":830,"permission_name":"edit-custom-delivery-charges-genie-delivery","status":"Active","display_group_id":33,"display_sub_group_id":155,"eFor":"Genie"}
+{"id":831,"permission_name":"delete-custom-delivery-charges-genie-delivery","status":"Active","display_group_id":33,"display_sub_group_id":155,"eFor":"Genie"}
+{"id":832,"permission_name":"update-status-custom-delivery-charges-genie-delivery","status":"Inactive","display_group_id":33,"display_sub_group_id":155,"eFor":"Genie"}
+{"id":842,"permission_name":"view-custom-delivery-charges-runner-delivery","status":"Active","display_group_id":34,"display_sub_group_id":158,"eFor":"Runner"}
+{"id":843,"permission_name":"create-custom-delivery-charges-runner-delivery","status":"Active","display_group_id":34,"display_sub_group_id":158,"eFor":"Runner"}
+{"id":844,"permission_name":"edit-custom-delivery-charges-runner-delivery","status":"Active","display_group_id":34,"display_sub_group_id":158,"eFor":"Runner"}
+{"id":845,"permission_name":"delete-custom-delivery-charges-runner-delivery","status":"Active","display_group_id":34,"display_sub_group_id":158,"eFor":"Runner"}
+{"id":846,"permission_name":"update-status-custom-delivery-charges-runner-delivery","status":"Inactive","display_group_id":34,"display_sub_group_id":158,"eFor":"Runner"}

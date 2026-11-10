@@ -1,0 +1,124 @@
+  ok   login as the test super admin
+
+--- the slice the two menus share, before anything is written ---
+  ok   406 is a DeliverAll row
+  ok   407 is a DeliverAll row
+  ok   the shared slice holds exactly those two types
+  ok   the taxi slice has 14 live types to stay out of
+  ok   the parcel slice has 6 live types to stay out of
+
+--- a create through the runner menu writes a DeliverAll row genie lists ---
+  ok   POST /vehicle-type/runner -> 201 (the app answers now)
+  ok   the new type has an id
+  ok   it lands at the end of the shared list
+  ok   the row is eType='DeliverAll', not a runner-only eType
+  ok     with the runner name
+  ok     mirrored into vVehicleType
+  ok     active
+  ok     icon
+  ok     delivery charge
+  ok     cancel charge
+  ok     radius
+  ok     commission
+  ok     bound to the chosen zone
+  ok     and no service category
+  ok   GET it back through runner -> 200
+  ok   GET it back through genie -> 200
+  ok     and the two reads are the same document
+  ok   the genie list now holds 3 types
+  ok     including the row the runner menu created
+  ok     the runner list reports the same total
+  ok     and the same ids
+  ok   the taxi slice is untouched
+  ok   the parcel slice is untouched
+
+--- sharing rows means sharing names, and sharing the refusals ---
+  ok   POST the runner's name through genie -> 400
+  ok     because the slice already holds it
+  ok   POST it through runner again -> 400
+  ok   POST the same name for a taxi -> 201
+  ok     in the ride slice
+  ok   POST a blank name -> 400
+  ok   POST a column that is not a setting -> 400
+  ok     naming the offending column
+  ok   POST a commission above 100 -> 400
+  ok   POST a deleted DeliverAll category -> 400
+  ok   POST a zone that does not exist -> 400
+  ok   POST /vehicle-type/medical -> 400
+  ok   POST /vehicle-type/deliverall -> 400
+  ok   none of them inserted a row
+
+--- an edit through runner is the edit genie reads ---
+  ok   PUT /vehicle-type/runner/<id> -> 200
+  ok     genie's read shows the runner's commission
+  ok     read through genie too
+  ok     and the radius
+  ok     the stored row agrees
+  ok     while the untouched charge stayed
+  ok   PUT a French name through genie -> 200
+  ok     the runner read shows it
+  ok     and the English name is untouched
+  ok   PUT with nothing to change -> 400
+  ok   PUT a negative radius -> 400
+  ok   PUT /vehicle-type/ride/<runner id> -> 404
+  ok   PUT /vehicle-type/delivery/<runner id> -> 404
+  ok   PUT /vehicle-type/runner/1 (a taxi row) -> 404
+  ok   PUT /vehicle-type/runner/397 (a parcel row) -> 404
+  ok   the runner row kept its commission through all of that
+
+--- the shipped shared row is one row, seen twice ---
+  ok   PUT /vehicle-type/runner/406 -> 200
+  ok     genie reads the runner's +2
+  ok     the stored row agrees
+  ok   PUT the shipped commission back through genie -> 200
+  ok     and 406 holds its own value again
+  ok   the second shipped row never moved
+
+--- a status flip is visible from both menus ---
+  ok   PATCH /vehicle-type/runner/<id>/status Inactive -> 200
+  ok     genie reads the row Inactive
+  ok     the row is Inactive in SQL
+  ok   the genie Active filter drops it
+  ok     the runner Active filter drops it too
+  ok   PATCH it Active again through genie -> 200
+  ok     the runner read agrees
+  ok   PATCH a status the enum has not -> 400
+  ok   PATCH /vehicle-type/runner/1/status (a taxi row) -> 404
+  ok     and the taxi row is still Active
+
+--- a delete from either menu hides the row from both lists ---
+  ok   DELETE with a blank confirm -> 400
+  ok   DELETE with the wrong name -> 400
+  ok     and it names the type instead
+  ok   DELETE the runner's own type through genie -> 200
+  ok     the row is kept and marked Deleted
+  ok     with its charges intact for the audit trail
+  ok   GET the deleted type through runner -> 404
+  ok   GET it through genie -> 404
+  ok   the runner list is back to 2
+  ok   DELETE it twice -> 404
+  ok   PATCH the deleted type -> 404
+  ok   POST a second type through genie -> 201
+  ok   DELETE it through runner -> 200
+  ok     and it is Deleted for genie as well
+  ok   the shared slice is two types again
+  ok   DELETE /vehicle-type/runner/1 (a taxi row) -> 404
+
+--- every runner mutation left an audit trail ---
+  ok   audit event vehicle_type_created
+  ok   audit event vehicle_type_updated
+  ok   audit event vehicle_type_status_changed
+  ok   audit event vehicle_type_deleted
+  ok   no runner-suffixed audit events exist
+
+--- the table after the run, before restore ---
+  ok   the shared slice is the two shipped types
+  ok   406 holds its shipped commission
+  ok   407 never moved at all
+  ok   406 keeps its shipped name
+  ok   the taxi slice is still 14 live types
+  ok   the parcel slice is still 6 live types
+slices: Ride/Active=11 Ride/Inactive=3 Ride/Deleted=3 Deliver/Active=6 Deliver/Deleted=1 DeliverAll/Active=2 DeliverAll/Deleted=4
+expected: the runner test rows sit in the table as Deleted until b156.mjs restore
+
+b156-write: 102 ok, 0 failed

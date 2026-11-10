@@ -1,0 +1,1 @@
+iDeliveyChargeId=2|iDistanceRangeFrom=0|iDistanceRangeTo=100|fDeliveryCharge=15.00|eStatus=Active|fDeliveryChargeUser=0.00|fDeliveryChargeCancelled=7.00|iVehicleTypeId=407

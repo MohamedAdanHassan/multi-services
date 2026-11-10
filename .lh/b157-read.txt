@@ -1,0 +1,65 @@
+{"admin":{"id":15,"firstName":"Test","lastName":"SuperAdmin","email":"admin.test@ondemand.local","groupId":1},"roles":[1],"permissions":["*"],"accessTokenExpiresIn":900}
+--- reads: the runner app answers over the whole shared table ---
+GET /delivery-charge/runner/list (was an unknown app)          200  OK
+runner list holds every live row, not a runner slice           YES  OK
+the shipped All-locations scheme is listed here                YES  OK
+the list keeps the legacy money columns                        YES  OK
+the list keeps the band columns the distance-wise switch exposes YES  OK
+runner reads the same switches genie reads                     YES  OK
+and the same currency                                          YES  OK
+and no zone tagged for this screen, which is the live census   YES  OK
+GET /delivery-charge/runner/1 (the All-locations row)          200  OK
+the runner detail reports the shared scope label               YES  OK
+the shared row reads its stored amounts                        YES  OK
+the shared row shows the band it was priced in                 YES  OK
+distance-wise freezes the scope of a scheme, from either menu  YES  OK
+nine specs, two of them behind the Buy Any Service switch      YES  OK
+GET /delivery-charge/runner/defaults                           200  OK
+defaults are a blank scheme of nine specs                      YES  OK
+defaults open with the ∞ band the list shows                 YES  OK
+a new scheme may still choose its scope                        YES  OK
+GET /delivery-charge/runner/list?page=1&limit=50               200  OK
+the paged form adds the page fields around the same rows       YES  OK
+GET /delivery-charge/runner/list?status=Active                 200  OK
+GET /delivery-charge/runner/list?search=50                     200  OK
+GET /delivery-charge/runner/list?sort=orderPrice&order=asc     200  OK
+GET .../list?sort=location (whitelisted)                       200  OK
+GET .../list?status=Deleted (unknown filter)                   200  OK
+an unknown status filters nothing rather than everything       YES  OK
+GET .../list?sort=id;DROP (injection falls back)               200  OK
+--- reads: runner and genie are one table seen twice, not two copies ---
+runner list body == genie list body                            YES  OK
+runner 1 detail == genie 1 detail                              YES  OK
+runner defaults == genie defaults                              YES  OK
+paged runner list == paged genie list                          YES  OK
+searched runner list == searched genie list                    YES  OK
+sorted runner list == sorted genie list                        YES  OK
+--- reads: apps that never owned this screen stay unregistered ---
+GET /delivery-charge/store/list (no such menu) 400             400  OK
+GET /delivery-charge/deliverall/list (no such menu) 400        400  OK
+GET /delivery-charge/ride/list (an app of other screens) 400   400  OK
+GET /delivery-charge/runner/999999 (missing 404)               404  OK
+GET /delivery-charge/runner/abc (bad id 400)                   400  OK
+GET /delivery-charge/runner/0 (not a row id 400)               400  OK
+GET /delivery-charge/runner/list-x (id route 400)              400  OK
+GET /delivery-charge/list (old flat path gone) 404             404  OK
+--- auth: every runner path demands a session ---
+GET /delivery-charge/runner/list without a cookie              401  OK
+GET /delivery-charge/runner/1 without a cookie                 401  OK
+GET /delivery-charge/runner/defaults without a cookie          401  OK
+GET runner list without X-Requested-With                       401  OK
+--- the RBAC tree carries the five runner keys under sub-group 157 ---
+tree carries view-delivery-charges-runner-delivery             YES  OK
+tree carries create-delivery-charges-runner-delivery           YES  OK
+tree carries edit-delivery-charges-runner-delivery             YES  OK
+tree carries delete-delivery-charges-runner-delivery           YES  OK
+tree carries update-status-delivery-charges-runner-delivery    YES  OK
+genie keeps its own family under sub-group 154                 YES  OK
+the un-suffixed menu keeps its key under sub-group 27          YES  OK
+no runner key leaked under the genie sub-group                 YES  OK
+--- the runner menu is one screen three menus own (names verbatim from the DB) ---
+sub-group 157 still carries the sharing warning                YES  OK
+and it is filed under Delivery Runner, group 34                YES  OK
+runner's tree order is view, create, delete, update-status, edit YES  OK
+
+read matrix: 56 OK, 0 FAIL

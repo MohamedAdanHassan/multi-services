@@ -1,0 +1,431 @@
+
+> admin@0.1.0 dev
+> next dev
+
+▲ Next.js 16.4.3 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.8.22:3000
+- Environments: .env.local
+✓ Ready in 8.9s
+⚠ Warning: Next.js ignored pnpm-workspace.yaml in /home/ataa because it is outside the current Git repository (/home/ataa/mohamed/multiservice/admin).
+ To use this directory, set `turbopack.root` in your Next.js config.
+
+✓ Running next.config.ts took 2.1s
+⚠ Slow filesystem detected. The benchmark took 298ms. If /home/ataa/mohamed/multiservice/admin/.next/dev is a network drive, consider moving it to a local folder.
+See more: https://nextjs.org/docs/app/guides/local-development
+- Cache Components enabled
+- Partial Prefetching enabled
+- Experiments (use with caution):
+  ✓ agentFeedback
+
+○ Compiling /login ...
+ GET /permissions/33 200 in 9.5s (next.js: 2.6s, generate-params: 6.3s, application-code: 701ms)
+○ Compiling /vehicle-type/[app]/new ...
+ GET /vehicle-type/genie/new 200 in 770ms (next.js: 14ms, generate-params: 564ms, application-code: 192ms)
+○ Compiling /vehicle-type/[app]/[id]/edit ...
+ GET /vehicle-type/genie/406/edit 200 in 695ms (next.js: 11ms, generate-params: 566ms, application-code: 118ms)
+ GET /vehicle-type/ride/new 200 in 121ms (next.js: 1.5ms, generate-params: 17ms, application-code: 103ms)
+○ Compiling /_not-found/page ...
+ GET /vehicle-type/delivery/list 404 in 7.0s (next.js: 7.0s, application-code: 72ms)
+ GET /login 200 in 249ms (next.js: 101ms, application-code: 148ms)
+○ Compiling / ...
+ GET / 200 in 67ms (next.js: 12ms, application-code: 55ms)
+ GET /permissions/33 200 in 118ms (next.js: 3ms, generate-params: 25ms, application-code: 91ms)
+ GET /vehicle-type/genie/new 200 in 142ms (next.js: 5ms, generate-params: 14ms, application-code: 123ms)
+ GET /vehicle-type/genie/648/edit 200 in 180ms (next.js: 5ms, generate-params: 27ms, application-code: 149ms)
+ GET /permissions/33 200 in 126ms (next.js: 2ms, generate-params: 21ms, application-code: 102ms)
+ GET /permissions/33 200 in 458ms (next.js: 1.7ms, generate-params: 82ms, application-code: 375ms)
+ GET /permissions/7 200 in 116ms (next.js: 1.9ms, generate-params: 22ms, application-code: 92ms)
+ GET /permissions/32 200 in 83ms (next.js: 1.2ms, generate-params: 17ms, application-code: 64ms)
+✓ Compiled in 35.4s
+ GET /permissions/33 200 in 185ms (next.js: 4ms, generate-params: 32ms, application-code: 149ms)
+ GET /permissions/33 200 in 72ms (next.js: 5ms, generate-params: 22ms, application-code: 45ms)
+✓ Compiled in 157.5s
+✓ Finished writing to filesystem cache in 33.1s
+⚠ Fast Refresh had to perform a full reload when ./src/lib/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /permissions/33 200 in 31.5s (next.js: 3.5s, generate-params: 1181ms, application-code: 26.8s)
+✓ Compiled in 32s
+✓ Finished writing to filesystem cache in 88s
+ GET /permissions/33 200 in 188ms (next.js: 74ms, generate-params: 0.1ms, application-code: 114ms)
+ GET /permissions/33 200 in 926ms (next.js: 279ms, generate-params: 26ms, application-code: 621ms)
+✓ Compiled in 40ms
+○ Compiling /delivery-charge/[app]/new ...
+ GET /delivery-charge/genie/new 200 in 1452ms (next.js: 35ms, generate-params: 855ms, application-code: 562ms)
+ GET /delivery-charge/genie/1/edit 200 in 1425ms (next.js: 10ms, generate-params: 927ms, application-code: 489ms)
+ GET /permissions/33 200 in 129ms (next.js: 3ms, generate-params: 31ms, application-code: 95ms)
+✓ Finished filesystem cache database compaction in 12.7s
+ GET /login 200 in 940ms (next.js: 85ms, application-code: 855ms)
+ GET / 200 in 306ms (next.js: 37ms, application-code: 269ms)
+ GET /permissions/33 200 in 256ms (next.js: 1.4ms, generate-params: 42ms, application-code: 212ms)
+ GET /delivery-charge/genie/1/edit 200 in 200ms (next.js: 5ms, generate-params: 49ms, application-code: 146ms)
+ GET /vehicle-type/delivery/new 200 in 1583ms (next.js: 505ms, generate-params: 34ms, application-code: 1045ms)
+ GET /delivery-charge/genie/new 200 in 191ms (next.js: 1.3ms, generate-params: 29ms, application-code: 161ms)
+ GET /delivery-charge/genie/2/edit 200 in 117ms (next.js: 2ms, generate-params: 32ms, application-code: 82ms)
+ GET /permissions/33 200 in 148ms (next.js: 3ms, generate-params: 31ms, application-code: 114ms)
+ GET /permissions/7 200 in 132ms (next.js: 1.5ms, generate-params: 32ms, application-code: 99ms)
+✓ Compiled in 31.9s
+ GET /permissions/33 200 in 1148ms (next.js: 88ms, generate-params: 96ms, application-code: 964ms)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/vehicle-t..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head headRenderTree={{...}}>
+                    <__next_viewport_boundary__>
+                    <MetadataWrapper>
+                      <__next_metadata_boundary__>
+                        <div
+                          hidden={true}
+-                         bis_skin_checked="1"
+                        >
+                    ...
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="h-full ant...">
+                          <body
+                            className="min-h-full flex flex-col"
+-                           __processed_03f0e2b3-9516-4397-9c50-1ff14edac8bd__="true"
+-                           bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWll..."
+                          >
+                  ...
+ 
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <LoadingBoundary name="new/" loading={null}>
+      <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+        <RedirectBoundary>
+          <RedirectErrorBoundary router={{...}}>
+            <InnerLayoutRouter url="/vehicle-t..." tree={[...]} params={{app:"delivery"}} renderTree={{...}} ...>
+              <SegmentViewNode type="page" pagePath="vehicle-ty...">
+                <SegmentTrieNode>
+                <ClientPageRoot Component={function NewVehicleTypePage} serverProvidedParams={null}>
+                  <NewVehicleTypePage params={Promise} searchParams={Promise}>
+                    <Suspense fallback={null}>
+                      <NewVehicleTypeBody>
+                        <RequireAuth permission="create-veh...">
+                          <Centered>
+                            <div
+                              className="flex min-h-[60vh] flex-col items-center justify-center gap-2 p-8 text-center"
+-                             bis_skin_checked="1"
+                            >
+                              <div
+                                className="size-6 animate-spin rounded-full border-2 border-current border-t-transparent"
+-                               bis_skin_checked="1"
+                              >
+                              ...
+              ...
+            ...
+ 
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+ GET /permissions/33 200 in 79ms (next.js: 1.4ms, generate-params: 29ms, application-code: 49ms)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+ GET /permissions/33 200 in 127ms (next.js: 2ms, generate-params: 46ms, application-code: 78ms)
+ GET /delivery-charge/genie/new 200 in 202ms (next.js: 22ms, generate-params: 37ms, application-code: 142ms)
+ GET /delivery-charge/genie/1/edit 200 in 278ms (next.js: 40ms, generate-params: 30ms, application-code: 208ms)
+ GET /permissions/33 200 in 117ms (next.js: 3ms, generate-params: 28ms, application-code: 86ms)
+✓ Compiled in 11.5s
+✓ Compiled in 60.4s
+ GET /login 200 in 135ms (next.js: 1.5ms, application-code: 134ms)
+ GET /permissions/33 200 in 203ms (next.js: 1.9ms, generate-params: 37ms, application-code: 164ms)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+ GET /permissions/33 200 in 140ms (next.js: 1.7ms, generate-params: 38ms, application-code: 100ms)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/permissio..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head headRenderTree={{...}}>
+                    <__next_viewport_boundary__>
+                    <MetadataWrapper>
+                      <__next_metadata_boundary__>
+                        <div
+                          hidden={true}
+-                         bis_skin_checked="1"
+                        >
+                    ...
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="h-full ant...">
+                          <body
+                            className="min-h-full flex flex-col"
+-                           __processed_89200325-d128-475c-aaad-e7f156778239__="true"
+-                           bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWll..."
+                          >
+                  ...
+ 
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/permissio..." tree={[...]} params={{groupId:"33"}} renderTree={{...}} ...>
+            <SegmentViewNode type="page" pagePath="permission...">
+              <SegmentTrieNode>
+              <ClientPageRoot Component={function ModulePermissionsPage} serverProvidedParams={null}>
+                <ModulePermissionsPage params={Promise} searchParams={Promise}>
+                  <Suspense fallback={<div>}>
+                    <ModulePermissionsBody>
+                      <DeliveryGenieModule groupId={33}>
+                        <RequireAuth>
+                          <Centered>
+                            <div
+                              className="flex min-h-[60vh] flex-col items-center justify-center gap-2 p-8 text-center"
+-                             bis_skin_checked="1"
+                            >
+                              <div
+                                className="size-6 animate-spin rounded-full border-2 border-current border-t-transparent"
+-                               bis_skin_checked="1"
+                              >
+                              ...
+            ...
+          ...
+ 
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+ GET /permissions/33 200 in 122ms (next.js: 3ms, generate-params: 27ms, application-code: 92ms)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+ GET /delivery-charge/genie/1/edit 200 in 238ms (next.js: 36ms, generate-params: 30ms, application-code: 172ms)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)
+[browser] ⨯ unhandledRejection: TypeError: Cannot read properties of undefined (reading 'M_ID')
+    at Y (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:761)
+    at E (chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js:1:1442)

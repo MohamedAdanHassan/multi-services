@@ -1,0 +1,149 @@
+  ok   login as the test super admin
+
+baseline: 1 live row(s) of 1 total; #1 = location 0, band 0→200
+seeded zones 8 9 10 11 12 as eFor='UserDeliveryCharge' (dropped at the end)
+
+--- the table both menus price, before anything is written ---
+  ok   one live scheme today
+  ok   runner lists the shipped row
+  ok   genie lists the same row
+  ok   runner list body == genie list body
+  ok   distance-wise is on, so a scheme owns one band
+  ok   Buy Any Service is on, and it is the *Genie* feature both menus test
+
+--- a create through the runner menu is genie's row from the first second ---
+  ok   POST /delivery-charge/runner (band 300-400 of All locations) -> 201
+  ok     it took the next free id of the shared table
+  ok     the location is the sentinel, not a runner-only scope
+  ok     the band is stored
+  ok     and the row starts Active, the way the legacy form left it
+  ok   genie's list carries the row runner created
+  ok     the live count grew by exactly one
+  ok   the two menus read the new row identically
+  ok     the DTO carries the money it stored
+  ok   POST an open-ended band of a seeded zone -> 201
+  ok   genie reports it as open-ended
+  ok     at the sentinel of the band columns
+  ok   a twin scheme created through genie instead -> 201
+  ok   the two rows differ in nothing but their id and their zone
+  ok     which is the whole table's column list
+
+--- the band rules are one table's rules, asked from either menu ---
+  ok   a genie band inside the band runner created -> 400
+  ok     and it names the band as the list would
+  ok   a runner band inside the shipped row's band -> 400
+  ok   a first band that does not start at 0 -> 400
+  ok   the same zone from 0 -> 201
+  ok   an adjacent band through the other menu -> 201
+  ok   a band spanning two bands runner laid out -> 400
+  ok   a band that ends before it starts -> 400
+  ok   a zone tagged for another screen -> 400
+  ok   a zone that does not exist -> 400
+  ok   a create with no location at all -> 400
+  ok   an empty settings map -> 400
+  ok   a non-numeric amount -> 400
+  ok   a column this table does not own -> 400
+  ok   POST /delivery-charge/store -> 400 (no such menu)
+  ok   and none of the refusals wrote anything
+
+--- money written by the runner is the money genie reads ---
+  editing #6 (location 9, band 0→50)
+  ok   PUT through the runner -> 200
+  ok     order total rewritten
+  ok     charge above rewritten
+  ok     charge below untouched
+  ok   genie reads the number runner wrote
+  ok   PUT through genie -> 200
+  ok     the column genie wrote is stored
+  ok   runner reads the number genie wrote
+  ok   and the two menus still cannot tell the row apart
+  ok   PUT with an empty body -> 400
+  ok   blanking a required amount -> 400
+  ok   blanking an optional amount through genie -> 200
+  ok     radius stored as 0
+  ok   an out-of-range amount -> 400
+  ok   PUT a row that does not exist -> 404
+
+--- the shipped scheme: borrowed by both menus, returned untouched ---
+  ok   PUT the shipped row through the runner -> 200
+  ok     genie reads the new order total
+  ok   change its location -> 400
+  ok   the same attempt through genie -> 400
+  ok     and it still prices every location
+  ok   narrow its band -> 400
+  ok   shift its band through the other menu -> 400
+  ok   echoing the stored band saves the money -> 200
+  ok     the band is exactly where it was
+  ok   put both amounts back -> 200
+  ok   the shipped row is back on every one of its 12 columns
+
+--- status and scope freeze reach the other menu too ---
+  ok   PATCH /runner/.../status to Inactive -> 200
+  ok     the shared row is Inactive
+  ok     genie's detail says so too
+  ok     and it drops out of genie's Active filter
+  ok     and shows up in the runner's Inactive one
+  ok   PATCH to Deleted is refused (that is what DELETE is for)
+  ok     the row kept the status the other menu set
+  ok   PATCH back to Active through genie -> 200
+  ok     the runner reads it as Active
+  ok   widening a band another menu's band owns -> 400
+  ok   moving it to a zone only the other menu would use -> 400
+
+--- either menu can delete a scheme the other one made ---
+  ok   create a scheme in the runner menu -> 201
+  ok   DELETE it from genie with the wrong confirmation -> 400
+  ok     and it names the zone the runner chose
+  ok   DELETE with no confirmation -> 400
+  ok   DELETE a runner scheme from the genie menu -> 200
+  ok     it answers with the shared location label
+  ok     the row is kept and marked Deleted
+  ok     the live count dropped by one
+  ok     the table kept the row
+  ok   GET it from genie -> 404
+  ok   GET the same id from runner -> 404
+  ok   PUT it from runner -> 404
+  ok   PATCH it from genie -> 404
+  ok   DELETE it again from runner -> 404
+  ok     the zone is priceable again once its scheme is hidden -> 201
+  ok     genie calls the zone by the name the runner menu would type
+  ok   DELETE genie's scheme #5 from the runner menu -> 200
+  ok     the row is hidden, not erased
+  ok     and genie can no longer read it
+  ok   the shipped scheme survived all of this
+  ok   and both menus still list it
+
+--- the runner menu writes genie's audit events, not its own ---
+  ok   audit saw delivery_charge_created
+  ok   audit saw delivery_charge_updated
+  ok   audit saw delivery_charge_status_changed
+  ok   audit saw delivery_charge_deleted
+  ok   no runner-suffixed audit events exist
+
+--- flipping ENABLE_BUY_ANY_SERVICE_MODULE to No (waiting 65s for the meta cache) ---
+  ok   the runner loses the Buy Any fields
+  ok     and so does genie, from the same switch
+  ok   seven specs remain in the runner form
+  ok     the two Buy Any columns are gone
+  ok   genie's spec list is the same length
+  ok   a create without the gated fields -> 201
+  ok     the gated columns stored 0, as the legacy save wrote them
+  ok   sending a gated field from the runner -> 400
+  ok   the same attempt from genie -> 400
+  ok   the switch is back on its shipped value
+
+waiting 65s for the meta cache to drop the flipped switch
+zones seeded and dropped: 8, 9, 10, 11, 12
+switches now: ENABLE_CUSTOM_DELIVERY_CHARGE_ORDER=Yes, ENABLE_BUY_ANY_SERVICE_MODULE=Yes
+
+--- the table after the run, before restore ---
+  ok   the shipped scheme is the oldest live row of both menus
+  ok     and the two menus list the same ids in the same order
+  ok   the row this install shipped is byte-identical to the run's start
+  ok   distance-wise is still on for the next reader
+  ok   and Buy Any Service too
+live rows after the run: 8 (baseline 1)
+total rows after the run: 10 (started 1)
+expected: the created rows sit in the table as Deleted until `node scripts/b157.mjs restore`
+
+b157-write: 116 ok, 0 failed

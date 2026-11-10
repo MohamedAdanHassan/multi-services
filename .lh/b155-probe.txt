@@ -1,0 +1,35 @@
+
+===== DDL custom_delivery_charges_order =====
+{"Table":"custom_delivery_charges_order","Create Table":"CREATE TABLE `custom_delivery_charges_order` (\n  `iDeliveyChargeId` int NOT NULL,\n  `iDistanceRangeFrom` int NOT NULL,\n  `iDistanceRangeTo` int NOT NULL,\n  `fDeliveryCharge` decimal(9,2) NOT NULL,\n  `eStatus` enum('Active','Deleted') NOT NULL DEFAULT 'Active',\n  `fDeliveryChargeUser` decimal(9,2) NOT NULL,\n  `fDeliveryChargeCancelled` decimal(9,2) NOT NULL,\n  `iVehicleTypeId` int NOT NULL\n) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC"}
+
+===== rows =====
+{"iDeliveyChargeId":1,"iDistanceRangeFrom":0,"iDistanceRangeTo":200,"fDeliveryCharge":"10.00","eStatus":"Active","fDeliveryChargeUser":"0.00","fDeliveryChargeCancelled":"5.00","iVehicleTypeId":406}
+{"iDeliveyChargeId":2,"iDistanceRangeFrom":0,"iDistanceRangeTo":100,"fDeliveryCharge":"15.00","eStatus":"Active","fDeliveryChargeUser":"0.00","fDeliveryChargeCancelled":"7.00","iVehicleTypeId":407}
+
+===== columns =====
+{"Field":"iDeliveyChargeId","Type":"int","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"iDistanceRangeFrom","Type":"int","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"iDistanceRangeTo","Type":"int","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"fDeliveryCharge","Type":"decimal(9,2)","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"eStatus","Type":"enum('Active','Deleted')","Null":"NO","Key":"","Default":"Active","Extra":""}
+{"Field":"fDeliveryChargeUser","Type":"decimal(9,2)","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"fDeliveryChargeCancelled","Type":"decimal(9,2)","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"iVehicleTypeId","Type":"int","Null":"NO","Key":"","Default":null,"Extra":""}
+
+===== flags =====
+{"vName":"DEFAULT_DISTANCE_UNIT","vValue":"KMs"}
+{"vName":"ENABLE_CUSTOM_DELIVERY_CHARGE_ORDER","vValue":"Yes"}
+{"vName":"ENABLE_BUY_ANY_SERVICE_MODULE","vValue":"Yes"}
+
+===== vehicle_type DeliverAll =====
+ERR Unknown column 'iServiceId' in 'field list'
+
+===== location_master ids =====
+{"iLocationId":1,"vLocationName":"Prahladnagar","eFor":"PromoCode","eStatus":"Active"}
+{"iLocationId":2,"vLocationName":"PG","eFor":"PromoCode","eStatus":"Active"}
+{"iLocationId":3,"vLocationName":"wada","eFor":"VehicleType","eStatus":"Active"}
+{"iLocationId":4,"vLocationName":"city","eFor":"VehicleType","eStatus":"Active"}
+{"iLocationId":5,"vLocationName":"city","eFor":"FixFare","eStatus":"Active"}
+
+===== custom-delivery-charges permission keys =====
+ERR Unknown column 'vcPermissionKey' in 'where clause'

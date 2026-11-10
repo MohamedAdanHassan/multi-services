@@ -1,0 +1,35 @@
+nohup: ignoring input
+
+> admin@0.1.0 dev /home/ataa/mohamed/multiservice/admin
+> next dev
+
+▲ Next.js 16.4.3 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.8.22:3000
+- Environments: .env.local
+✓ Ready in 8.2s
+⚠ Warning: Next.js ignored pnpm-workspace.yaml in /home/ataa because it is outside the current Git repository (/home/ataa/mohamed/multiservice/admin).
+ To use this directory, set `turbopack.root` in your Next.js config.
+
+✓ Running next.config.ts took 2.1s
+⚠ Slow filesystem detected. The benchmark took 249ms. If /home/ataa/mohamed/multiservice/admin/.next/dev is a network drive, consider moving it to a local folder.
+See more: https://nextjs.org/docs/app/guides/local-development
+- Cache Components enabled
+- Partial Prefetching enabled
+- Experiments (use with caution):
+  ✓ agentFeedback
+
+○ Compiling / ...
+○ Compiling /permissions/[groupId] ...
+ GET /permissions/34 200 in 2.9s (next.js: 317ms, generate-params: 1028ms, application-code: 1567ms)
+ GET /permissions/34 200 in 96ms (next.js: 3ms, generate-params: 12ms, application-code: 81ms)
+ GET /permissions/33 200 in 116ms (next.js: 1.7ms, generate-params: 0.1ms, application-code: 114ms)
+○ Compiling /delivery-charge/[app]/new ...
+ GET /delivery-charge/runner/new 200 in 1511ms (next.js: 28ms, generate-params: 982ms, application-code: 501ms)
+ GET /permissions/34 200 in 556ms (next.js: 352ms, generate-params: 19ms, application-code: 186ms)
+ GET /delivery-charge/runner/new 200 in 195ms (next.js: 14ms, generate-params: 27ms, application-code: 154ms)
+ GET /permissions/34 200 in 183ms (next.js: 3ms, generate-params: 21ms, application-code: 159ms)
+ GET /permissions/33 200 in 190ms (next.js: 4ms, generate-params: 19ms, application-code: 167ms)
+ GET /permissions/34 200 in 142ms (next.js: 5ms, generate-params: 28ms, application-code: 108ms)
+ ELIFECYCLE  Command failed.
+Hangup

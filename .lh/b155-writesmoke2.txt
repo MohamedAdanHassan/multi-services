@@ -1,0 +1,33 @@
+login 200 cookie ok
+
+--- create: the chain of vehicle type 406 ---
+first band of 407 (0-50)                       400  Distance range from must be 100 KMs, where the widest existing band ends.
+out-of-chain start (250)                       400  Distance range from must be 100 KMs, where the widest existing band ends.
+chain start (50-100)                           400  Distance range from must be 100 KMs, where the widest existing band ends.
+overlap (50-80)                                400  Distance range from must be 100 KMs, where the widest existing band ends.
+to <= from (100-100)                           400  Distance range to must be greater than distance range from.
+open-ended (100-inf)                           201  {"item":{"id":3,"vehicleType":{"id":407,"name":"Car","missing":false,"status":"Active","localizationLabel":"All Locations"},"band":{"from":100,"to":10
+after an open-ended one (200-300)              400  This vehicle type already has an open-ended band, so no further charge can be added.
+first band of a fresh type must start 0        400  Distance range from must be 200 KMs, where the widest existing band ends.
+read-only customer amount                      400  “Amount added to the customer's delivery charge” is stored, not editable: the legacy form writes 0 and never asks.
+unknown column                                 400  Unknown distance-wise charge value “eStatus”.
+vehicle type of another line                   400  Vehicle type #1 is not an active delivery vehicle type.
+valid band (406 200-300)                       201  {"item":{"id":4,"vehicleType":{"id":406,"name":"2 Wheeler / Motorbike","missing":false,"status":"Active","localizationLabel":"All Locations"},"band":{
+created id: 4 | band: 200 – 300 KMs | rowLabel: 2 Wheeler / Motorbike 200-300
+
+--- update: only the amounts move ---
+re-price completed                             200  {"item":{"id":4,"vehicleType":{"id":406,"name":"2 Wheeler / Motorbike","missing":false,"status":"Active","localizationLabel":"All Locations"},"band":{
+no change asked                                400  Validation failed — Send the vehicle type, or the values that changed.
+band moved                                     400  A charge's distance band is fixed once it exists — delete the row and add it again.
+band repeated verbatim + amount                200  {"item":{"id":4,"vehicleType":{"id":406,"name":"2 Wheeler / Motorbike","missing":false,"status":"Active","localizationLabel":"All Locations"},"band":{
+vehicle type swapped                           400  A charge's vehicle type is fixed once it exists — delete the row and add it again.
+customer amount                                400  “Amount added to the customer's delivery charge” is stored, not editable: the legacy form writes 0 and never asks.
+stored: {"fDeliveryCharge":"4.50","fDeliveryChargeCancelled":"1.50","fDeliveryChargeUser":"0.00"} scopeEditable: false
+
+--- delete: hard, and confirmed with the whole row ---
+bare confirm                                   400  Validation failed — Required
+wrong confirm                                  400  Confirmation does not match: this charge is “2 Wheeler / Motorbike 200-300”.
+right confirm                                  200  {"ok":true,"id":4,"label":"2 Wheeler / Motorbike 200-300"}
+gone: GET                                      404  Distance-wise delivery charge #4 not found.
+rows with that id left in the table: 0
+delete again                                   404  Distance-wise delivery charge #4 not found.

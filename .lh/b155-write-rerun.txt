@@ -1,0 +1,180 @@
+nohup: ignoring input
+  ok   login as the test super admin
+
+--- baseline: what the live install holds ---
+  ok   the table holds two bands
+  ok   GET /distance-charge/genie/list -> 200
+  ok     with both of them
+  ok   row #1 is the motorbike's 0 – 200
+  ok     labelled with the type, for the delete phrase
+  ok     and priced for every zone
+  ok   row #2 is the car's 0 – 100
+  ok     with no customer surcharge stored
+  ok   the list carries no status column of its own
+
+--- defaults: what the add form is handed ---
+  ok   GET /distance-charge/genie/defaults -> 200
+  ok   no id yet
+  ok   the scope is open on a new row
+  ok     and frozen on a saved one
+  ok   nothing to confirm a delete with
+  ok   the band has no upper bound claimed
+  ok   the distance unit is the configured one
+  ok   amounts are labelled with the default currency
+  ok   distance-wise charges are on
+  ok   five values are asked about, amounts then band
+  ok     the customer surcharge is readable but not writable
+  ok     the band's upper bound starts at 1
+  ok     and stops below what the ∞ sentinel means
+  ok   the dropdown offers the DeliverAll types, in display order
+  ok     and no type of another service line
+  ok   the motorbike's next band starts where its widest ends
+  ok     and is not closed
+  ok   the car's next band starts at 100
+  ok   a blank row stores no amounts as decided
+  ok     and the unread surcharge as 0
+
+--- create: the chain of the car (widest band 0 – 100) ---
+  ok   a band above the chain start is refused
+  ok   so is one far past it
+  ok   an upper bound equal to the start
+  ok   a start below the band's own floor is out of range
+  ok   a start that is not a number
+  ok   an amount beyond the column's ceiling
+  ok   no completed-order amount at all
+  ok   a blank required amount
+  ok   the customer surcharge cannot be set
+  ok   nor can a column the table does not have
+  ok   not even the status column, which this screen never writes
+  ok   a vehicle type of another service line
+  ok   a vehicle type that exists in neither table
+  ok   a body naming no vehicle type is refused by the route
+  ok   an empty body is refused by the route
+  ok   an empty settings group is refused too
+  ok   and one naming more values than the screen owns
+  ok   nothing was written by any refusal
+  ok   the next band of the chain is priced
+  ok     at MAX(iDeliveyChargeId)+1, since the column has none
+  ok     with the band the form asked for
+  ok     and the type it belongs to
+  ok   stored: from 100
+  ok   stored: to 150
+  ok   stored: completed 6.5
+  ok   stored: cancelled 2
+  ok   stored: the surcharge the form never asked for is 0
+  ok   stored: the row is Active, as every row here is
+  ok   the same band cannot be priced twice
+  ok   and neither can one overlapping it by hand
+  ok   an open-ended band is accepted
+  ok     sent as the sentinel the list renders as ∞
+  ok     flagged open on the record
+  ok   stored: as 100000000
+  ok     and shown as ∞ in the list
+  ok     with the open flag on the row
+  ok   no further band fits past an open-ended one
+  ok   the defaults now say the type is closed
+  ok   ∞ as text is understood, and is refused for the chain's reason, not as a bad number
+
+--- create: a chain that does not start at 0 (hand-edited data) ---
+  ok   the motorbike now holds one band, starting above 0
+  ok     and the defaults still describe its chain as open
+  ok   a band above 0 while no band starts at 0
+  ok   and one starting at 0 that runs into the existing band
+  ok   nor a band that would sit past it while the chain is broken
+  ok   still nothing written by any of them
+  ok   the hand edit is undone
+  ok   and the car stays closed by its own open-ended band
+
+--- update: only the amounts move ---
+  ok   the row being repriced is the one created above
+  ok   PUT one changed amount -> 200
+  ok     written to the column
+  ok     and the untouched amount keeps its value
+  ok     the record comes back with the new amount
+  ok     with the band still the row's own
+  ok   both amounts in one save -> 200
+  ok     completed
+  ok     cancelled
+  ok   a form that resends the whole scope -> 200
+  ok     writes the amount it changed
+  ok     and leaves the band where it was
+  ok   a save that only repeats the band decided nothing
+  ok   a moved start is refused
+  ok   so is a moved end
+  ok   and an open-ended one sent as ∞
+  ok   a swapped vehicle type is refused
+  ok   the customer surcharge stays unwritable
+  ok   a column the table does not have is unknown here too
+  ok   a cleared required amount is a decision, not silence
+  ok   an amount beyond the ceiling is out of range
+  ok   a save that changed nothing is refused by the route
+  ok   so is an entirely empty body
+  ok   the surcharge is still the 0 the create wrote
+  ok   a band of the other type, repriced with no type sent -> 200
+  ok     written to its own row
+
+--- delete: hard, confirmed with the whole row ---
+  ok   the row knows its own label
+  ok   a delete with nothing typed back is refused by the route
+  ok   the type's name alone is not the row
+  ok   nor the band alone, which two types can share
+  ok   nor a near miss
+  ok     and the row is still there after four refusals
+  ok   DELETE with the row typed back -> 200
+  ok     naming what went
+  ok     the row is gone from the table, not hidden
+  ok     so no Deleted copy is left behind
+  ok   GET it now -> 404
+  ok   PUT it now -> 404
+  ok   DELETE it again -> 404
+  ok   the list lost exactly one band
+  ok     and the deleted id is not in it
+
+--- a type's last band gone: the chain starts over ---
+  ok   the ∞ band asks to be confirmed as the word, not the glyph
+  ok   the open-ended band deletes with its own label -> 200
+  ok   the car holds only its live 0 – 100 again
+  ok     the defaults say the next band starts at 100
+  ok     and the type is open again
+  ok   the motorbike's only band deletes -> 200
+  ok     its chain is no longer described at all
+  ok   a type with no bands must still start at 0
+  ok     and a band starting at 0 is priced
+  ok     at the id a delete of this run freed, not the lowest missing one
+  ok     so the reused id is that one
+  ok     with the delete phrase rebuilt from the row
+  ok   the list holds the car's band and this one
+
+--- a row the screen cannot see cannot be stopped either (hard delete's reason) ---
+  ok   the list ignores it
+  ok   GET on it -> 404
+  ok   PUT on it -> 404
+  ok   and it cannot even be deleted from this screen -> 404
+  ok   yet the row is still in the table, which is the whole argument for hard deletes
+  ok   search cannot reach it either
+  ok   and only SQL takes it out
+
+--- :app gates keys, not rows ---
+  ok   the runner menu answers and reads the same rows
+  ok     genie's total, identical
+  ok     and genie's rows, item for item
+  ok     the same DeliverAll types in its dropdown
+  ok   a segment that names no registered menu is refused
+  ok     and the refusal names it, not a swallowed scope
+  ok   the genie list is unaffected by all this
+
+--- flipping ENABLE_CUSTOM_DELIVERY_CHARGE_ORDER off, then back ---
+  ok   the list reports distance-wise off
+  ok     and still shows the bands
+  ok   the specs do not move with the switch — a band is a band either way
+  ok     and the row's identity is still its band
+  ok   a band can still be priced while the apps ignore them
+  ok   flipped back, the list reports it on again
+
+--- clearing the bands this run added ---
+live bands after the run: 1 (baseline 2)
+rows in the table: 1
+expected: node scripts/b155.mjs restore puts the deleted live bands back, and the
+          fingerprint matches what `node scripts/b155.mjs fingerprint before` wrote.
+
+b155-write: 151 ok, 0 failed

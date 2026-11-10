@@ -1,0 +1,22 @@
+
+===== sql_mode =====
+{"sql_mode":"IGNORE_SPACE,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION","version":"8.0.46-0ubuntu0.24.04.4"}
+
+===== admin_pro_permissions columns =====
+{"Field":"id","Type":"int","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"permission_name","Type":"varchar(255)","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"name","Type":"varchar(255)","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"status","Type":"enum('Active','Inactive','Deleted')","Null":"NO","Key":"","Default":"Active","Extra":""}
+{"Field":"display_group_id","Type":"int","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"display_sub_group_id","Type":"int","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"display_order","Type":"int","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"vDispalyAppType","Type":"varchar(255)","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"eFor","Type":"enum('General','Ride','Delivery','Ride,Delivery','UberX','Ride,Delivery,UberX','Multi-Delivery','DeliverAll','Kiosk','Fly','Bidding','RentItem','RentEstate','RentCars','TrackService','RideShare','NearBy','TrackAnyService','Genie','Runner','Ride,Delivery,DeliverAll')","Null":"NO","Key":"","Default":null,"Extra":""}
+{"Field":"eType","Type":"enum('List','Other')","Null":"NO","Key":"","Default":"Other","Extra":""}
+
+===== vehicle_type DeliverAll =====
+{"iVehicleTypeId":406,"vVehicleType_en":"2 Wheeler / Motorbike","iLocationId":-1,"eType":"DeliverAll","eStatus":"Active"}
+{"iVehicleTypeId":407,"vVehicleType_en":"Car","iLocationId":-1,"eType":"DeliverAll","eStatus":"Active"}
+
+===== distance-wise family keys =====
+ERR Unknown column 'vcPermissionKey' in 'where clause'

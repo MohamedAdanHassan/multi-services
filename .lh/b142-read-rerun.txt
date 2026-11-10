@@ -1,0 +1,35 @@
+{"admin":{"id":15,"firstName":"Test","lastName":"SuperAdmin","email":"admin.test@ondemand.local","groupId":1},"roles":[1],"permissions":["*"],"accessTokenExpiresIn":900}
+--- reads ---
+GET /banner/delivery/list (parcel #sub-140)    200  OK
+GET /banner/genie/list (genie #sub-142)        200  OK
+GET /banner/genie/68 (own slice group)         200  OK
+GET /banner/delivery/68 (cross-slice 404)      404  OK
+GET /banner/genie/50 (cross-slice 404)         404  OK
+GET /banner/delivery/70 (own slice group)      200  OK
+GET /banner/runner/list (third app, #sub-143)  200  OK
+GET /banner/store/list (no such slice 400)     400  OK
+GET /banner/genie/defaults (next slot 4)       200  OK
+GET /banner/delivery/defaults                  200  OK
+GET /banner/genie/999999 (missing 404)         404  OK
+GET /banner/genie/abc (bad id 400)             400  OK
+GET /banner/list (old flat path gone)          404  OK
+scripts/b142-read.sh: line 27: warning: command substitution: ignored null byte in input
+GET /banner/genie/68/image (picture bytes)     200  OK
+--- genie list shape ---
+{
+    "items": [
+        {
+            "id": 68,
+            "title": "Delivery Genie",
+            "image": "20230113155737103.png",
+            "hasImage": true,
+            "status": "Active",
+            "displayOrder": 3,
+            "statusBarColor": "",
+            "translationsFilled": 26,
+            "languageCount": 26,
+            "rowCount": 26
+        }
+    ],
+    "total": 1
+}
